@@ -77,7 +77,8 @@ textarea {
   font-size: 16px;
 }
 
-input[type="date"] {
+input[type="date"],
+input[type="time"] {
   min-height: 46px;
 }
 
@@ -243,15 +244,15 @@ input[type="number"] {
 
   border: 1px solid #555;
 
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 
   text-align: right;
 }
 
 .expected span {
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 
@@ -548,6 +549,10 @@ button {
     font-size: 15px !important;
   }
 
+  input[type="number"] {
+    font-size: 15px !important;
+  }
+
 }
 
 </style>
@@ -610,10 +615,9 @@ button {
 </label>
 
 <input
-  type="text"
+  type="time"
   id="openTime"
-  placeholder="Например, 08:30"
-  inputmode="numeric"
+  value=""
 >
 
 
@@ -973,10 +977,9 @@ button {
 </label>
 
 <input
-  type="text"
+  type="time"
   id="closeTime"
-  placeholder="Например, 22:00"
-  inputmode="numeric"
+  value=""
 >
 
 
@@ -1384,7 +1387,15 @@ function calculate() {
     num("withdraw");
 
 
-  /* Ожидаемый наличный остаток */
+  /*
+    ОЖИДАЕМЫЙ ОСТАТОК
+
+    Начальная наличность
+    +
+    наличные оплаты
+    -
+    все расходы
+  */
 
   const expectedCash =
     num("openCash") +
@@ -1625,6 +1636,16 @@ function createReport() {
   );
 
 
+  /*
+    ВАЖНО:
+
+    Здесь показывается только
+    ФАКТИЧЕСКИЙ остаток.
+
+    Ожидаемый остаток в JPEG
+    НЕ выводится.
+  */
+
   setText(
     "rCloseCash",
     money(
@@ -1794,16 +1815,10 @@ async function saveJPEG() {
 
 
 /* =====================================================
-   ДАТА ПУСТАЯ
+   ДАТА И ВРЕМЯ ИЗНАЧАЛЬНО ПУСТЫЕ
    ===================================================== */
 
 document.getElementById("date").value = "";
-
-
-/* =====================================================
-   ВРЕМЯ НЕ ЗАПОЛНЯЕМ
-   БАРИСТА ВВОДИТ САМА
-   ===================================================== */
 
 document.getElementById("openTime").value = "";
 
