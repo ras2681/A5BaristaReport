@@ -149,9 +149,10 @@ button{
   font-weight:600;
 }
 
-/* =========================
-   ИТОГОВЫЙ JPEG
-========================= */
+
+/* =========================================
+   ИТОГОВЫЙ JPEG-ОТЧЁТ
+   ========================================= */
 
 #report{
   position:absolute;
@@ -179,6 +180,7 @@ button{
   margin-bottom:10px;
 }
 
+/* ДАТА — увеличена только в финальном отчёте */
 .report-date{
   font-size:34px;
   margin-bottom:28px;
@@ -206,13 +208,13 @@ button{
   vertical-align:middle;
 }
 
-/* ОСНОВНОЙ ТЕКСТ ТАБЛИЦЫ */
 .report-table th{
   font-size:24px;
   font-weight:600;
   text-align:left;
 }
 
+/* ОСНОВНОЙ ТЕКСТ ТАБЛИЦЫ — увеличен с 27 до 30 px */
 .report-table td{
   font-size:30px;
   font-weight:400;
@@ -274,13 +276,17 @@ button{
   width:50%;
 }
 
-/* Время открытия/закрытия в итоговом отчёте */
+/* ВРЕМЯ — увеличено только в финальном отчёте */
 .report-time{
   font-size:34px !important;
   font-weight:400 !important;
 }
 
-/* Мобильная форма */
+
+/* =========================================
+   МОБИЛЬНАЯ ФОРМА
+   ========================================= */
+
 @media(max-width:600px){
 
   .container{
@@ -360,6 +366,7 @@ button{
   </select>
 </div>
 
+
 <div class="section-title">ОТКРЫТИЕ СМЕНЫ</div>
 
 <table class="form-table">
@@ -385,6 +392,7 @@ button{
     <td></td>
   </tr>
 </table>
+
 
 <div class="section-title">ОПЛАТЫ ЗА СМЕНУ</div>
 
@@ -419,6 +427,7 @@ button{
 <div class="total-line">
   ИТОГО оплат: <span id="paymentTotal">0</span> ₽
 </div>
+
 
 <div class="section-title">РАСХОДЫ И ИЗЪЯТИЯ</div>
 
@@ -519,6 +528,7 @@ button{
   <strong><span id="expectedCash">0</span> ₽</strong>
 </div>
 
+
 <div class="section-title">ЗАКРЫТИЕ СМЕНЫ</div>
 
 <table class="form-table">
@@ -545,6 +555,7 @@ button{
   </tr>
 </table>
 
+
 <button onclick="saveJPEG()">
   Сохранить / отправить JPEG
 </button>
@@ -552,9 +563,9 @@ button{
 </div>
 
 
-<!-- =========================
+<!-- =========================================
      СКРЫТЫЙ ИТОГОВЫЙ ОТЧЁТ
-========================= -->
+     ========================================= -->
 
 <div id="report">
 
@@ -566,11 +577,13 @@ button{
 
   <div class="report-date" id="rDate">—</div>
 
+
   <div class="report-section">
     ОТКРЫТИЕ СМЕНЫ
   </div>
 
   <table class="report-table">
+
     <tr>
       <th>Показатель</th>
       <th>Значение</th>
@@ -594,6 +607,7 @@ button{
       <td id="rOpenCash">—</td>
       <td></td>
     </tr>
+
   </table>
 
 
@@ -602,6 +616,7 @@ button{
   </div>
 
   <table class="report-table">
+
     <tr>
       <th>Оплата</th>
       <th>Сумма</th>
@@ -619,6 +634,7 @@ button{
       <td id="rCard">—</td>
       <td id="rCardComment"></td>
     </tr>
+
   </table>
 
   <div class="report-total" id="rPaymentTotalBlock">
@@ -631,6 +647,7 @@ button{
   </div>
 
   <table class="report-table">
+
     <tr>
       <th>Расход</th>
       <th>Сумма</th>
@@ -684,6 +701,7 @@ button{
       <td id="rWithdraw"></td>
       <td id="rWithdrawComment"></td>
     </tr>
+
   </table>
 
   <div class="report-total" id="rExpenseTotalBlock">
@@ -698,6 +716,7 @@ button{
     </div>
 
     <table class="report-close-table">
+
       <tr>
         <td>Время</td>
         <td id="rCloseTime" class="report-time">—</td>
@@ -707,6 +726,7 @@ button{
         <td>Остаток наличных в кассе</td>
         <td id="rCloseCash">—</td>
       </tr>
+
     </table>
 
   </div>
@@ -717,20 +737,34 @@ button{
 <script>
 
 function num(id){
-  const value = document.getElementById(id).value;
-  return value === "" ? 0 : Number(value);
+
+  const value =
+    document.getElementById(id).value;
+
+  return value === ""
+    ? 0
+    : Number(value);
 }
 
+
 function formatMoney(value){
-  return Number(value || 0).toLocaleString("ru-RU");
+
+  return Number(value || 0)
+    .toLocaleString("ru-RU");
 }
+
 
 function calculate(){
 
-  const cash = num("cash");
-  const card = num("card");
+  const cash =
+    num("cash");
 
-  const paymentTotal = cash + card;
+  const card =
+    num("card");
+
+  const paymentTotal =
+    cash + card;
+
 
   const expenseTotal =
     num("baristaExpense1") +
@@ -742,63 +776,71 @@ function calculate(){
     num("supplier4") +
     num("withdraw");
 
+
   const expectedCash =
     num("openCash") +
     cash -
     expenseTotal;
 
+
   document.getElementById("paymentTotal").textContent =
     formatMoney(paymentTotal);
 
+
   document.getElementById("expenseTotal").textContent =
     formatMoney(expenseTotal);
+
 
   document.getElementById("expectedCash").textContent =
     formatMoney(expectedCash);
 }
 
 
-document.addEventListener("input", calculate);
-document.addEventListener("change", calculate);
+document.addEventListener(
+  "input",
+  calculate
+);
+
+document.addEventListener(
+  "change",
+  calculate
+);
 
 
-function prepareExpenseRow(rowId, amountId, commentId){
+function setExpenseRow(
+  rowId,
+  reportAmountId,
+  reportCommentId,
+  amountId,
+  commentId
+){
 
-  const row = document.getElementById(rowId);
-  const amount = document.getElementById(amountId).value;
+  const amount =
+    document.getElementById(amountId).value;
+
+  const comment =
+    document.getElementById(commentId).value;
+
+  const row =
+    document.getElementById(rowId);
+
 
   if(amount === ""){
-    row.style.display = "none";
+
+    row.style.display =
+      "none";
+
     return;
   }
 
-  row.style.display = "table-row";
 
-  document.getElementById(
-    amountId.replace("baristaExpense","rBaristaExpense")
-            .replace("supplier","rSupplier")
-            .replace("withdraw","rWithdraw")
-  );
+  row.style.display =
+    "table-row";
 
-}
-
-
-function setExpenseRow(rowId, reportAmountId, reportCommentId, amountId, commentId){
-
-  const amount = document.getElementById(amountId).value;
-  const comment = document.getElementById(commentId).value;
-
-  const row = document.getElementById(rowId);
-
-  if(amount === ""){
-    row.style.display = "none";
-    return;
-  }
-
-  row.style.display = "table-row";
 
   document.getElementById(reportAmountId).textContent =
-    formatMoney(amount);
+    formatMoney(amount) + " ₽";
+
 
   document.getElementById(reportCommentId).textContent =
     comment || "";
@@ -807,37 +849,67 @@ function setExpenseRow(rowId, reportAmountId, reportCommentId, amountId, comment
 
 function createReport(){
 
-  const date = document.getElementById("date").value;
+  /* Дата */
+
+  const date =
+    document.getElementById("date").value;
+
 
   if(date){
-    const parts = date.split("-");
+
+    const parts =
+      date.split("-");
+
+
     document.getElementById("rDate").textContent =
       `${parts[2]}.${parts[1]}.${parts[0]}`;
+
   }else{
-    document.getElementById("rDate").textContent = "—";
+
+    document.getElementById("rDate").textContent =
+      "—";
   }
 
+
+  /* Бариста */
 
   document.getElementById("rBarista").textContent =
     document.getElementById("barista").value || "—";
 
 
+  /* Открытие */
+
   document.getElementById("rOpenTime").textContent =
     document.getElementById("openTime").value || "—";
 
-  const openCash = document.getElementById("openCash").value;
+
+  const openCash =
+    document.getElementById("openCash").value;
+
 
   document.getElementById("rOpenCash").textContent =
-    openCash === "" ? "—" : formatMoney(openCash) + " ₽";
+    openCash === ""
+      ? "—"
+      : formatMoney(openCash) + " ₽";
 
 
-  /* Оплаты */
+  /* =========================
+     ОПЛАТЫ
+     ========================= */
 
-  const cash = document.getElementById("cash").value;
-  const cashComment = document.getElementById("cashComment").value;
+  const cash =
+    document.getElementById("cash").value;
 
-  const card = document.getElementById("card").value;
-  const cardComment = document.getElementById("cardComment").value;
+  const cashComment =
+    document.getElementById("cashComment").value;
+
+
+  const card =
+    document.getElementById("card").value;
+
+  const cardComment =
+    document.getElementById("cardComment").value;
+
 
   const paymentTotal =
     num("cash") +
@@ -845,37 +917,64 @@ function createReport(){
 
 
   if(cash === ""){
-    document.getElementById("rCashRow").style.display = "none";
+
+    document.getElementById("rCashRow").style.display =
+      "none";
+
   }else{
-    document.getElementById("rCashRow").style.display = "table-row";
+
+    document.getElementById("rCashRow").style.display =
+      "table-row";
+
+
     document.getElementById("rCash").textContent =
       formatMoney(cash) + " ₽";
+
+
     document.getElementById("rCashComment").textContent =
       cashComment || "";
   }
 
 
   if(card === ""){
-    document.getElementById("rCardRow").style.display = "none";
+
+    document.getElementById("rCardRow").style.display =
+      "none";
+
   }else{
-    document.getElementById("rCardRow").style.display = "table-row";
+
+    document.getElementById("rCardRow").style.display =
+      "table-row";
+
+
     document.getElementById("rCard").textContent =
       formatMoney(card) + " ₽";
+
+
     document.getElementById("rCardComment").textContent =
       cardComment || "";
   }
 
 
   if(cash === "" && card === ""){
-    document.getElementById("rPaymentTotalBlock").style.display = "none";
+
+    document.getElementById("rPaymentTotalBlock").style.display =
+      "none";
+
   }else{
-    document.getElementById("rPaymentTotalBlock").style.display = "block";
+
+    document.getElementById("rPaymentTotalBlock").style.display =
+      "block";
+
+
     document.getElementById("rPaymentTotal").textContent =
       formatMoney(paymentTotal);
   }
 
 
-  /* Расходы */
+  /* =========================
+     РАСХОДЫ
+     ========================= */
 
   setExpenseRow(
     "rBaristaExpense1Row",
@@ -885,6 +984,7 @@ function createReport(){
     "baristaComment1"
   );
 
+
   setExpenseRow(
     "rBaristaExpense2Row",
     "rBaristaExpense2",
@@ -892,6 +992,7 @@ function createReport(){
     "baristaExpense2",
     "baristaComment2"
   );
+
 
   setExpenseRow(
     "rBaristaExpense3Row",
@@ -901,6 +1002,7 @@ function createReport(){
     "baristaComment3"
   );
 
+
   setExpenseRow(
     "rSupplier1Row",
     "rSupplier1",
@@ -908,6 +1010,7 @@ function createReport(){
     "supplier1",
     "supplierComment1"
   );
+
 
   setExpenseRow(
     "rSupplier2Row",
@@ -917,6 +1020,7 @@ function createReport(){
     "supplierComment2"
   );
 
+
   setExpenseRow(
     "rSupplier3Row",
     "rSupplier3",
@@ -925,6 +1029,7 @@ function createReport(){
     "supplierComment3"
   );
 
+
   setExpenseRow(
     "rSupplier4Row",
     "rSupplier4",
@@ -932,6 +1037,7 @@ function createReport(){
     "supplier4",
     "supplierComment4"
   );
+
 
   setExpenseRow(
     "rWithdrawRow",
@@ -969,6 +1075,7 @@ function createReport(){
     document.getElementById("rExpenseTotalBlock").style.display =
       "block";
 
+
     document.getElementById("rExpenseTotal").textContent =
       formatMoney(expenseTotal);
 
@@ -979,15 +1086,22 @@ function createReport(){
   }
 
 
-  /* Закрытие */
+  /* =========================
+     ЗАКРЫТИЕ
+     ========================= */
 
   document.getElementById("rCloseTime").textContent =
     document.getElementById("closeTime").value || "—";
 
-  const closeCash = document.getElementById("closeCash").value;
+
+  const closeCash =
+    document.getElementById("closeCash").value;
+
 
   document.getElementById("rCloseCash").textContent =
-    closeCash === "" ? "—" : formatMoney(closeCash) + " ₽";
+    closeCash === ""
+      ? "—"
+      : formatMoney(closeCash) + " ₽";
 }
 
 
@@ -995,18 +1109,32 @@ async function makeJPEG(){
 
   createReport();
 
-  const report = document.getElementById("report");
 
-  const canvas = await html2canvas(report,{
-    scale:2,
-    backgroundColor:"#111",
-    useCORS:true
-  });
+  const report =
+    document.getElementById("report");
+
+
+  const canvas =
+    await html2canvas(
+      report,
+      {
+        scale:2,
+        backgroundColor:"#111",
+        useCORS:true
+      }
+    );
+
 
   return new Promise(resolve=>{
-    canvas.toBlob(blob=>{
-      resolve(blob);
-    },"image/jpeg",0.95);
+
+    canvas.toBlob(
+      blob=>{
+        resolve(blob);
+      },
+      "image/jpeg",
+      0.95
+    );
+
   });
 }
 
@@ -1015,25 +1143,31 @@ async function saveJPEG(){
 
   try{
 
-    const blob = await makeJPEG();
+    const blob =
+      await makeJPEG();
+
 
     const date =
       document.getElementById("date").value ||
       "смена";
 
-    const file = new File(
-      [blob],
-      `A5_отчет_${date}.jpg`,
-      {
-        type:"image/jpeg"
-      }
-    );
+
+    const file =
+      new File(
+        [blob],
+        `A5_отчет_${date}.jpg`,
+        {
+          type:"image/jpeg"
+        }
+      );
 
 
     if(
       navigator.share &&
       navigator.canShare &&
-      navigator.canShare({files:[file]})
+      navigator.canShare({
+        files:[file]
+      })
     ){
 
       await navigator.share({
@@ -1043,18 +1177,30 @@ async function saveJPEG(){
 
     }else{
 
-      const url = URL.createObjectURL(blob);
+      const url =
+        URL.createObjectURL(blob);
 
-      const a = document.createElement("a");
 
-      a.href = url;
-      a.download = `A5_отчет_${date}.jpg`;
+      const a =
+        document.createElement("a");
+
+
+      a.href =
+        url;
+
+
+      a.download =
+        `A5_отчет_${date}.jpg`;
+
 
       document.body.appendChild(a);
 
+
       a.click();
 
+
       a.remove();
+
 
       setTimeout(()=>{
         URL.revokeObjectURL(url);
@@ -1065,10 +1211,10 @@ async function saveJPEG(){
 
     console.error(error);
 
-    alert("Не удалось сохранить изображение.");
-
+    alert(
+      "Не удалось сохранить изображение."
+    );
   }
-
 }
 
 
