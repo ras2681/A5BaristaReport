@@ -12,10 +12,6 @@
 
 <style>
 
-/* =====================================================
-   ОСНОВНЫЕ НАСТРОЙКИ
-   ===================================================== */
-
 * {
   box-sizing: border-box;
 }
@@ -44,9 +40,9 @@ body {
 }
 
 
-/* =====================================================
+/* ================================
    ЗАГОЛОВОК
-   ===================================================== */
+   ================================ */
 
 h1 {
   text-align: center;
@@ -55,15 +51,13 @@ h1 {
 }
 
 
-/* =====================================================
+/* ================================
    ОБЫЧНЫЕ ПОЛЯ
-   ===================================================== */
+   ================================ */
 
 label {
   display: block;
-
   margin: 7px 0 4px;
-
   font-size: 15px;
   line-height: 1.1;
 }
@@ -105,46 +99,15 @@ input[type="time"] {
   min-height: 40px;
 }
 
-
-/* =====================================================
-   СУММЫ
-   ===================================================== */
-
 input[type="number"] {
   font-size: 15px;
   font-weight: 400;
 }
 
 
-/* =====================================================
-   БАРИСТА
-   ===================================================== */
-
-.barista-block {
-  width: 100%;
-  max-width: 100%;
-
-  margin-bottom: 6px;
-
-  overflow: hidden;
-}
-
-.barista-label {
-  margin: 5px 0 3px;
-
-  font-size: 13px;
-  line-height: 1;
-}
-
-.barista-block select {
-  width: 100%;
-  max-width: 100%;
-}
-
-
-/* =====================================================
+/* ================================
    РАЗДЕЛЫ
-   ===================================================== */
+   ================================ */
 
 .section {
   width: 100%;
@@ -165,9 +128,9 @@ input[type="number"] {
 }
 
 
-/* =====================================================
+/* ================================
    ТАБЛИЦЫ ФОРМЫ
-   ===================================================== */
+   ================================ */
 
 .form-table {
   width: 100% !important;
@@ -214,7 +177,7 @@ input[type="number"] {
 }
 
 
-/* Заголовки таблицы */
+/* Заголовки */
 
 .form-table th {
   background: #222;
@@ -243,7 +206,7 @@ input[type="number"] {
 }
 
 
-/* Поля внутри таблицы */
+/* Поля внутри таблиц */
 
 .form-table input,
 .form-table textarea {
@@ -267,9 +230,9 @@ input[type="number"] {
 }
 
 
-/* =====================================================
+/* ================================
    ИТОГО
-   ===================================================== */
+   ================================ */
 
 .total {
   width: 100%;
@@ -289,9 +252,9 @@ input[type="number"] {
 }
 
 
-/* =====================================================
+/* ================================
    ОЖИДАЕМЫЙ ОСТАТОК
-   ===================================================== */
+   ================================ */
 
 .expected {
   width: 100%;
@@ -319,9 +282,9 @@ input[type="number"] {
 }
 
 
-/* =====================================================
+/* ================================
    КНОПКА
-   ===================================================== */
+   ================================ */
 
 button {
   display: block;
@@ -582,7 +545,6 @@ button {
 
   .section {
     font-size: 16px;
-
     padding: 7px 8px;
   }
 
@@ -602,19 +564,16 @@ button {
   .form-table input,
   .form-table textarea {
     height: 36px !important;
-
     font-size: 14px !important;
   }
 
   .total {
     font-size: 15px;
-
     padding: 7px;
   }
 
   .expected {
     font-size: 14px;
-
     padding: 8px;
   }
 
@@ -654,85 +613,30 @@ button {
 
 
 <!-- =====================================================
-     БАРИСТА
+     ОДИН БАРИСТА
      ===================================================== -->
 
 <label>
   Бариста
 </label>
 
+<select id="barista">
 
-<div class="barista-block">
+  <option value="" selected>—</option>
 
-  <div class="barista-label">
-    Бариста 1
-  </div>
+  <option value="Диана">
+    Диана
+  </option>
 
-  <select id="barista1">
+  <option value="Патя">
+    Патя
+  </option>
 
-    <option value="" selected>—</option>
-
-    <option value="Диана">
-      Диана
-    </option>
-
-    <option value="Патя">
-      Патя
-    </option>
-
-  </select>
-
-</div>
-
-
-<div class="barista-block">
-
-  <div class="barista-label">
-    Бариста 2
-  </div>
-
-  <select id="barista2">
-
-    <option value="" selected>—</option>
-
-    <option value="Диана">
-      Диана
-    </option>
-
-    <option value="Патя">
-      Патя
-    </option>
-
-  </select>
-
-</div>
-
-
-<div class="barista-block">
-
-  <div class="barista-label">
-    Бариста 3
-  </div>
-
-  <select id="barista3">
-
-    <option value="" selected>—</option>
-
-    <option value="Диана">
-      Диана
-    </option>
-
-    <option value="Патя">
-      Патя
-    </option>
-
-  </select>
-
-</div>
+</select>
 
 
 <!-- =====================================================
-     ОТКРЫТИЕ
+     ОТКРЫТИЕ СМЕНЫ
      ===================================================== -->
 
 <div class="section">
@@ -885,6 +789,8 @@ button {
 <tbody>
 
 
+<!-- БАРИСТА 1 -->
+
 <tr>
 
 <td>
@@ -895,7 +801,7 @@ button {
 
 <input
   type="number"
-  id="baristaExpense"
+  id="baristaExpense1"
   value=""
   inputmode="decimal"
 >
@@ -906,7 +812,7 @@ button {
 
 <input
   type="text"
-  id="baristaComment"
+  id="baristaComment1"
 >
 
 </td>
@@ -914,10 +820,74 @@ button {
 </tr>
 
 
+<!-- БАРИСТА 2 -->
+
 <tr>
 
 <td>
-  Поставщик 1
+  Бариста
+</td>
+
+<td>
+
+<input
+  type="number"
+  id="baristaExpense2"
+  value=""
+  inputmode="decimal"
+>
+
+</td>
+
+<td>
+
+<input
+  type="text"
+  id="baristaComment2"
+>
+
+</td>
+
+</tr>
+
+
+<!-- БАРИСТА 3 -->
+
+<tr>
+
+<td>
+  Бариста
+</td>
+
+<td>
+
+<input
+  type="number"
+  id="baristaExpense3"
+  value=""
+  inputmode="decimal"
+>
+
+</td>
+
+<td>
+
+<input
+  type="text"
+  id="baristaComment3"
+>
+
+</td>
+
+</tr>
+
+
+<!-- ПОСТАВЩИК 1 -->
+
+<tr>
+
+<td>
+  Поставщик
 </td>
 
 <td>
@@ -935,7 +905,7 @@ button {
 
 <input
   type="text"
-  id="supplier1Comment"
+  id="supplierComment1"
 >
 
 </td>
@@ -943,10 +913,12 @@ button {
 </tr>
 
 
+<!-- ПОСТАВЩИК 2 -->
+
 <tr>
 
 <td>
-  Поставщик 2
+  Поставщик
 </td>
 
 <td>
@@ -964,7 +936,7 @@ button {
 
 <input
   type="text"
-  id="supplier2Comment"
+  id="supplierComment2"
 >
 
 </td>
@@ -972,10 +944,12 @@ button {
 </tr>
 
 
+<!-- ПОСТАВЩИК 3 -->
+
 <tr>
 
 <td>
-  Поставщик 3
+  Поставщик
 </td>
 
 <td>
@@ -993,7 +967,7 @@ button {
 
 <input
   type="text"
-  id="supplier3Comment"
+  id="supplierComment3"
 >
 
 </td>
@@ -1001,10 +975,12 @@ button {
 </tr>
 
 
+<!-- ПОСТАВЩИК 4 -->
+
 <tr>
 
 <td>
-  Поставщик 4
+  Поставщик
 </td>
 
 <td>
@@ -1022,13 +998,15 @@ button {
 
 <input
   type="text"
-  id="supplier4Comment"
+  id="supplierComment4"
 >
 
 </td>
 
 </tr>
 
+
+<!-- ИЗЪЯТИЕ -->
 
 <tr>
 
@@ -1127,7 +1105,7 @@ button {
 
 
 <!-- =====================================================
-     ГОТОВЫЙ JPEG-ОТЧЁТ
+     ГОТОВЫЙ ОТЧЁТ
      ===================================================== -->
 
 <div id="report">
@@ -1162,36 +1140,20 @@ button {
 
 <tbody>
 
-
-<tr id="rBarista1Row">
+<tr>
   <td>Бариста</td>
-  <td id="rBarista1"></td>
+  <td id="rBarista"></td>
 </tr>
-
-
-<tr id="rBarista2Row">
-  <td>Бариста</td>
-  <td id="rBarista2"></td>
-</tr>
-
-
-<tr id="rBarista3Row">
-  <td>Бариста</td>
-  <td id="rBarista3"></td>
-</tr>
-
 
 <tr>
   <td>Время открытия</td>
   <td id="rOpenTime"></td>
 </tr>
 
-
 <tr>
   <td>Остаток наличных в кассе</td>
   <td id="rOpenCash"></td>
 </tr>
-
 
 </tbody>
 
@@ -1222,7 +1184,6 @@ button {
 
 <tbody>
 
-
 <tr id="rCashRow">
 
   <td>
@@ -1247,7 +1208,6 @@ button {
   <td id="rCardComment"></td>
 
 </tr>
-
 
 </tbody>
 
@@ -1291,76 +1251,86 @@ button {
 <tbody>
 
 
-<tr id="rBaristaExpenseRow">
+<tr id="rBaristaExpense1Row">
 
-  <td>
-    Бариста
-  </td>
+  <td>Бариста</td>
 
-  <td id="rBaristaExpense"></td>
+  <td id="rBaristaExpense1"></td>
 
-  <td id="rBaristaComment"></td>
+  <td id="rBaristaComment1"></td>
+
+</tr>
+
+
+<tr id="rBaristaExpense2Row">
+
+  <td>Бариста</td>
+
+  <td id="rBaristaExpense2"></td>
+
+  <td id="rBaristaComment2"></td>
+
+</tr>
+
+
+<tr id="rBaristaExpense3Row">
+
+  <td>Бариста</td>
+
+  <td id="rBaristaExpense3"></td>
+
+  <td id="rBaristaComment3"></td>
 
 </tr>
 
 
 <tr id="rSupplier1Row">
 
-  <td>
-    Поставщик 1
-  </td>
+  <td>Поставщик</td>
 
   <td id="rSupplier1"></td>
 
-  <td id="rSupplier1Comment"></td>
+  <td id="rSupplierComment1"></td>
 
 </tr>
 
 
 <tr id="rSupplier2Row">
 
-  <td>
-    Поставщик 2
-  </td>
+  <td>Поставщик</td>
 
   <td id="rSupplier2"></td>
 
-  <td id="rSupplier2Comment"></td>
+  <td id="rSupplierComment2"></td>
 
 </tr>
 
 
 <tr id="rSupplier3Row">
 
-  <td>
-    Поставщик 3
-  </td>
+  <td>Поставщик</td>
 
   <td id="rSupplier3"></td>
 
-  <td id="rSupplier3Comment"></td>
+  <td id="rSupplierComment3"></td>
 
 </tr>
 
 
 <tr id="rSupplier4Row">
 
-  <td>
-    Поставщик 4
-  </td>
+  <td>Поставщик</td>
 
   <td id="rSupplier4"></td>
 
-  <td id="rSupplier4Comment"></td>
+  <td id="rSupplierComment4"></td>
 
 </tr>
 
 
 <tr id="rWithdrawRow">
 
-  <td>
-    Изъятие
-  </td>
+  <td>Изъятие</td>
 
   <td id="rWithdraw"></td>
 
@@ -1399,7 +1369,6 @@ button {
 
 <tbody>
 
-
 <tr>
 
 <td>
@@ -1420,7 +1389,6 @@ button {
 <td id="rCloseCash"></td>
 
 </tr>
-
 
 </tbody>
 
@@ -1518,11 +1486,15 @@ function calculate() {
 
 
   const expenseTotal =
-    num("baristaExpense") +
+    num("baristaExpense1") +
+    num("baristaExpense2") +
+    num("baristaExpense3") +
+
     num("supplier1") +
     num("supplier2") +
     num("supplier3") +
     num("supplier4") +
+
     num("withdraw");
 
 
@@ -1531,11 +1503,11 @@ function calculate() {
 
     Остаток на открытии
     +
-    Наличные
+    наличные оплаты
     -
-    Расходы
+    все расходы.
 
-    Безнал НЕ учитывается.
+    Безнал не учитывается.
   */
 
   const expectedCash =
@@ -1584,9 +1556,9 @@ function prepareExpenseRow(
 
 
   /*
-    Нет суммы —
+    Если сумма пустая —
     строка полностью исчезает
-    из готового JPEG.
+    из JPEG.
   */
 
   if (amount === "") {
@@ -1643,45 +1615,10 @@ function createReport() {
      БАРИСТА
      ========================= */
 
-  const b1 =
-    val("barista1");
-
-  const b2 =
-    val("barista2");
-
-  const b3 =
-    val("barista3");
-
-
-  document.getElementById(
-    "rBarista1Row"
-  ).style.display =
-    b1 ? "" : "none";
-
-
-  document.getElementById(
-    "rBarista2Row"
-  ).style.display =
-    b2 ? "" : "none";
-
-
-  document.getElementById(
-    "rBarista3Row"
-  ).style.display =
-    b3 ? "" : "none";
-
-
-  if (b1) {
-    setText("rBarista1", b1);
-  }
-
-  if (b2) {
-    setText("rBarista2", b2);
-  }
-
-  if (b3) {
-    setText("rBarista3", b3);
-  }
+  setText(
+    "rBarista",
+    val("barista")
+  );
 
 
   /* =========================
@@ -1771,7 +1708,7 @@ function createReport() {
   }
 
 
-  /* ИТОГО оплат */
+  /* Итого оплат */
 
   const paymentTotal =
     num("cash") +
@@ -1810,13 +1747,15 @@ function createReport() {
   let expenseRows = 0;
 
 
+  /* Бариста */
+
   if (
     prepareExpenseRow(
-      "rBaristaExpenseRow",
-      "baristaExpense",
-      "rBaristaExpense",
-      "baristaComment",
-      "rBaristaComment"
+      "rBaristaExpense1Row",
+      "baristaExpense1",
+      "rBaristaExpense1",
+      "baristaComment1",
+      "rBaristaComment1"
     )
   ) {
     expenseRows++;
@@ -1825,11 +1764,39 @@ function createReport() {
 
   if (
     prepareExpenseRow(
+      "rBaristaExpense2Row",
+      "baristaExpense2",
+      "rBaristaExpense2",
+      "baristaComment2",
+      "rBaristaComment2"
+    )
+  ) {
+    expenseRows++;
+  }
+
+
+  if (
+    prepareExpenseRow(
+      "rBaristaExpense3Row",
+      "baristaExpense3",
+      "rBaristaExpense3",
+      "baristaComment3",
+      "rBaristaComment3"
+    )
+  ) {
+    expenseRows++;
+  }
+
+
+  /* Поставщики */
+
+  if (
+    prepareExpenseRow(
       "rSupplier1Row",
       "supplier1",
       "rSupplier1",
-      "supplier1Comment",
-      "rSupplier1Comment"
+      "supplierComment1",
+      "rSupplierComment1"
     )
   ) {
     expenseRows++;
@@ -1841,8 +1808,8 @@ function createReport() {
       "rSupplier2Row",
       "supplier2",
       "rSupplier2",
-      "supplier2Comment",
-      "rSupplier2Comment"
+      "supplierComment2",
+      "rSupplierComment2"
     )
   ) {
     expenseRows++;
@@ -1854,8 +1821,8 @@ function createReport() {
       "rSupplier3Row",
       "supplier3",
       "rSupplier3",
-      "supplier3Comment",
-      "rSupplier3Comment"
+      "supplierComment3",
+      "rSupplierComment3"
     )
   ) {
     expenseRows++;
@@ -1867,12 +1834,15 @@ function createReport() {
       "rSupplier4Row",
       "supplier4",
       "rSupplier4",
-      "supplier4Comment"
+      "supplierComment4",
+      "rSupplierComment4"
     )
   ) {
     expenseRows++;
   }
 
+
+  /* Изъятие */
 
   if (
     prepareExpenseRow(
@@ -1887,7 +1857,7 @@ function createReport() {
   }
 
 
-  /* ИТОГО расходов */
+  /* Итого расходов */
 
   if (expenseRows === 0) {
 
@@ -1904,11 +1874,15 @@ function createReport() {
     ).style.display = "";
 
     const expenseTotal =
-      num("baristaExpense") +
+      num("baristaExpense1") +
+      num("baristaExpense2") +
+      num("baristaExpense3") +
+
       num("supplier1") +
       num("supplier2") +
       num("supplier3") +
       num("supplier4") +
+
       num("withdraw");
 
 
@@ -1929,6 +1903,11 @@ function createReport() {
     val("closeTime")
   );
 
+
+  /*
+    В JPEG показывается только
+    фактический остаток.
+  */
 
   setText(
     "rCloseCash",
@@ -1988,7 +1967,7 @@ async function makeJPEG() {
 
 
 /* =====================================================
-   СОХРАНИТЬ / ОТПРАВИТЬ
+   СОХРАНИТЬ / ОТПРАВИТЬ JPEG
    ===================================================== */
 
 async function saveJPEG() {
@@ -2099,7 +2078,7 @@ async function saveJPEG() {
 
 
 /* =====================================================
-   ПОЛЯ ИЗНАЧАЛЬНО ПУСТЫЕ
+   ИЗНАЧАЛЬНО ПУСТЫЕ ПОЛЯ
    ===================================================== */
 
 document.getElementById("date").value = "";
