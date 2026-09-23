@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>A5 — Отчёт смены</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-
-/* =====================================================
-   ОСНОВА
-   ===================================================== */
 
 * {
   box-sizing: border-box;
@@ -36,7 +29,7 @@ body {
   background: #111;
   color: #fff;
   font-family: Arial, sans-serif;
-  padding: 10px;
+  padding: 8px;
 }
 
 .container {
@@ -46,29 +39,16 @@ body {
   overflow: hidden;
 }
 
-
-/* =====================================================
-   ЗАГОЛОВОК
-   ===================================================== */
-
 h1 {
-  width: 100%;
-  margin: 8px 0 20px;
   text-align: center;
-  font-size: 23px;
-  line-height: 1.15;
+  font-size: 22px;
+  margin: 8px 0 18px;
 }
-
-
-/* =====================================================
-   ОБЫЧНЫЕ ПОЛЯ
-   ===================================================== */
 
 label {
   display: block;
-  margin: 11px 0 5px;
+  margin: 10px 0 5px;
   font-size: 16px;
-  line-height: 1.2;
 }
 
 input,
@@ -82,12 +62,9 @@ input,
 select,
 textarea {
   display: block;
-
   width: 100%;
   max-width: 100%;
   min-width: 0;
-
-  box-sizing: border-box;
 
   padding: 9px;
 
@@ -100,47 +77,45 @@ textarea {
   font-size: 16px;
 }
 
-input[type="date"],
-input[type="time"] {
-  min-height: 48px;
+input[type="date"] {
+  min-height: 46px;
 }
 
 
-/* =====================================================
-   ВСЕ ПОЛЯ ДЛЯ СУММ — КРУПНЫЙ ШРИФТ
-   ===================================================== */
+/* ================================
+   ПОЛЯ СУММ
+   ================================ */
 
 input[type="number"] {
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 
-/* =====================================================
-   ЗАГОЛОВКИ РАЗДЕЛОВ
-   ===================================================== */
+/* ================================
+   РАЗДЕЛЫ
+   ================================ */
 
 .section {
   width: 100%;
 
-  margin-top: 20px;
+  margin-top: 18px;
   margin-bottom: 7px;
 
-  padding: 11px 12px;
+  padding: 10px 11px;
 
   background: #333;
+
   color: #fff;
 
   font-size: 18px;
   font-weight: 600;
-
-  line-height: 1.1;
 }
 
 
-/* =====================================================
+/* ================================
    ТАБЛИЦЫ ФОРМЫ
-   ===================================================== */
+   ================================ */
 
 .form-table {
   width: 100% !important;
@@ -149,8 +124,6 @@ input[type="number"] {
 
   table-layout: fixed !important;
   border-collapse: collapse;
-
-  margin: 0;
 }
 
 .form-table th,
@@ -158,7 +131,7 @@ input[type="number"] {
   min-width: 0 !important;
   max-width: 100% !important;
 
-  padding: 4px;
+  padding: 3px;
 
   border: 1px solid #444;
 
@@ -171,9 +144,7 @@ input[type="number"] {
 }
 
 
-/* =====================================================
-   КОЛОНКИ
-   ===================================================== */
+/* Три колонки */
 
 .form-table th:nth-child(1),
 .form-table td:nth-child(1) {
@@ -191,84 +162,62 @@ input[type="number"] {
 }
 
 
-/* =====================================================
-   ЗАГОЛОВКИ ТАБЛИЦ
-   ===================================================== */
+/* Заголовки */
 
 .form-table th {
   background: #222;
-
   font-size: 13px;
   font-weight: 600;
-
   line-height: 1.05;
-
   text-align: center;
 }
 
 
-/* =====================================================
-   ПЕРВАЯ КОЛОНКА
-   ===================================================== */
+/* Первая колонка */
 
 .form-table td:first-child {
   white-space: normal !important;
   word-break: normal !important;
   overflow-wrap: anywhere !important;
+
+  font-size: 16px;
   line-height: 1.15;
 }
 
 
-/* =====================================================
-   ПОЛЯ ВНУТРИ ТАБЛИЦ
-   ===================================================== */
+/* Поля внутри таблиц */
 
 .form-table input,
-.form-table textarea,
-.form-table select {
-
+.form-table textarea {
   display: block;
 
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
 
-  box-sizing: border-box !important;
+  height: 40px;
 
   margin: 0 !important;
 
-  padding: 7px !important;
+  padding: 5px !important;
 
-  border: 1px solid #555;
-  border-radius: 6px;
+  box-sizing: border-box !important;
 
-  background: #222;
-  color: #fff;
-
-  font-size: 14px !important;
-
-  overflow: hidden;
+  font-size: 16px !important;
+  font-weight: 400;
 }
 
 
-/* Суммы внутри таблиц — крупнее */
-
-.form-table input[type="number"] {
-  font-size: 19px !important;
-  font-weight: 500;
-}
-
-
-/* =====================================================
+/* ================================
    ИТОГО
-   ===================================================== */
+   ================================ */
 
 .total {
   width: 100%;
 
-  margin-top: 8px;
+  margin-top: 7px;
 
-  padding: 11px;
+  padding: 10px;
 
   background: #222;
 
@@ -281,17 +230,41 @@ input[type="number"] {
 }
 
 
-/* =====================================================
+/* ================================
+   ОЖИДАЕМЫЙ ОСТАТОК
+   ================================ */
+
+.expected {
+  margin-top: 8px;
+
+  padding: 11px;
+
+  background: #292929;
+
+  border: 1px solid #555;
+
+  font-size: 17px;
+  font-weight: 500;
+
+  text-align: right;
+}
+
+.expected span {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+
+/* ================================
    КНОПКА
-   ===================================================== */
+   ================================ */
 
 button {
   display: block;
 
   width: 100%;
-  max-width: 100%;
 
-  margin-top: 22px;
+  margin-top: 20px;
 
   padding: 15px;
 
@@ -303,8 +276,6 @@ button {
 
   font-size: 17px;
   font-weight: 600;
-
-  cursor: pointer;
 }
 
 
@@ -313,7 +284,6 @@ button {
    ===================================================== */
 
 #report {
-
   position: absolute;
 
   left: -10000px;
@@ -330,9 +300,7 @@ button {
 }
 
 
-/* =====================================================
-   A5
-   ===================================================== */
+/* ЛОГО */
 
 .report-logo {
   font-size: 68px;
@@ -342,9 +310,7 @@ button {
 }
 
 
-/* =====================================================
-   НАЗВАНИЕ
-   ===================================================== */
+/* ЗАГОЛОВОК */
 
 .report-title {
   font-size: 44px;
@@ -354,9 +320,7 @@ button {
 }
 
 
-/* =====================================================
-   ДАТА
-   ===================================================== */
+/* ДАТА */
 
 .report-date {
   font-size: 31px;
@@ -364,12 +328,9 @@ button {
 }
 
 
-/* =====================================================
-   РАЗДЕЛЫ
-   ===================================================== */
+/* РАЗДЕЛ */
 
 .report-section {
-
   margin-top: 20px;
 
   padding: 13px 15px;
@@ -379,17 +340,12 @@ button {
 
   font-size: 31px;
   font-weight: 500;
-
-  line-height: 1.1;
 }
 
 
-/* =====================================================
-   ТАБЛИЦЫ ОТЧЁТА
-   ===================================================== */
+/* ТАБЛИЦА */
 
 .report-table {
-
   width: 100%;
 
   border-collapse: collapse;
@@ -399,7 +355,6 @@ button {
 
 .report-table th,
 .report-table td {
-
   border: 2px solid #222;
 
   padding: 13px 15px;
@@ -414,18 +369,13 @@ button {
 }
 
 .report-table th {
-
   background: #f2f2f2;
-
   font-weight: 500;
-
   text-align: center;
 }
 
 
-/* =====================================================
-   ОТКРЫТИЕ
-   ===================================================== */
+/* ОТКРЫТИЕ */
 
 .report-opening td:first-child {
   width: 35%;
@@ -438,9 +388,7 @@ button {
 }
 
 
-/* =====================================================
-   ОПЛАТЫ
-   ===================================================== */
+/* ОПЛАТЫ */
 
 .report-payments th:nth-child(1),
 .report-payments td:nth-child(1) {
@@ -459,9 +407,7 @@ button {
 }
 
 
-/* =====================================================
-   РАСХОДЫ
-   ===================================================== */
+/* РАСХОДЫ */
 
 .report-expenses th:nth-child(1),
 .report-expenses td:nth-child(1) {
@@ -480,29 +426,22 @@ button {
 }
 
 
-/* =====================================================
-   ИТОГ ОТЧЁТА
-   ===================================================== */
+/* ИТОГО */
 
 .report-total {
-
   padding: 14px 15px;
 
   border: 2px solid #222;
-
   border-top: none;
 
   text-align: right;
 
   font-size: 30px;
-
   font-weight: 500;
 }
 
 
-/* =====================================================
-   ЗАКРЫТИЕ
-   ===================================================== */
+/* ЗАКРЫТИЕ */
 
 .report-closing td:first-child {
   width: 35%;
@@ -521,64 +460,48 @@ button {
 
 
 /* =====================================================
-   МОБИЛЬНЫЙ ЭКРАН
+   МОБИЛЬНАЯ ВЕРСИЯ
    ===================================================== */
 
 @media screen and (max-width: 600px) {
 
   body {
-    width: 100%;
-    max-width: 100%;
-    padding: 8px;
-    overflow-x: hidden;
+    padding: 7px;
   }
 
   .container {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
   }
 
   h1 {
     font-size: 21px;
-    margin-top: 8px;
-    margin-bottom: 18px;
   }
 
   .section {
     font-size: 17px;
-    padding: 11px;
   }
 
   .form-table {
     width: 100% !important;
-    max-width: 100% !important;
     table-layout: fixed !important;
-    margin: 0 !important;
   }
 
   .form-table th,
   .form-table td {
     padding: 3px !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    overflow: hidden !important;
   }
 
   .form-table th {
     font-size: 12px !important;
-    line-height: 1.05 !important;
   }
 
-  .form-table td {
-    font-size: 14px !important;
-    line-height: 1.1 !important;
+  .form-table td:first-child {
+    font-size: 16px !important;
   }
 
   .form-table input,
-  .form-table textarea,
-  .form-table select {
-
+  .form-table textarea {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -587,32 +510,11 @@ button {
 
     padding: 5px !important;
 
-    margin: 0 !important;
-
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
-
-  /* Суммы на iPhone */
-
-  .form-table input[type="number"] {
-
-    font-size: 19px !important;
-
-    font-weight: 500;
-  }
-
-  /* Поля суммы вне таблиц */
 
   input[type="number"] {
-
-    font-size: 20px !important;
-
-    min-height: 48px;
-  }
-
-  .total {
-    font-size: 17px;
-    padding: 10px;
+    font-size: 16px !important;
   }
 
 }
@@ -637,29 +539,22 @@ button {
     font-size: 11px !important;
   }
 
-  .form-table td {
-    font-size: 13px !important;
+  .form-table td:first-child {
+    font-size: 15px !important;
   }
 
   .form-table input,
   .form-table textarea {
-    font-size: 12px !important;
-    padding: 4px !important;
-  }
-
-  .form-table input[type="number"] {
-    font-size: 18px !important;
+    font-size: 15px !important;
   }
 
 }
 
 </style>
-
 </head>
 
 
 <body>
-
 
 <div class="container">
 
@@ -669,9 +564,9 @@ button {
 </h1>
 
 
-<!-- =====================================================
-     ДАТА — ПУСТАЯ
-     ===================================================== -->
+<!-- ================================
+     ДАТА
+     ================================ -->
 
 <label>
   Дата
@@ -684,9 +579,9 @@ button {
 >
 
 
-<!-- =====================================================
+<!-- ================================
      БАРИСТА
-     ===================================================== -->
+     ================================ -->
 
 <label>
   Бариста
@@ -694,20 +589,16 @@ button {
 
 <select id="barista">
 
-  <option value="Диана">
-    Диана
-  </option>
+  <option value="Диана">Диана</option>
 
-  <option value="Патя">
-    Патя
-  </option>
+  <option value="Патя">Патя</option>
 
 </select>
 
 
-<!-- =====================================================
+<!-- ================================
      ОТКРЫТИЕ
-     ===================================================== -->
+     ================================ -->
 
 <div class="section">
   ОТКРЫТИЕ СМЕНЫ
@@ -719,8 +610,10 @@ button {
 </label>
 
 <input
-  type="time"
+  type="text"
   id="openTime"
+  placeholder="Например, 08:30"
+  inputmode="numeric"
 >
 
 
@@ -737,9 +630,9 @@ button {
 >
 
 
-<!-- =====================================================
+<!-- ================================
      ОПЛАТЫ
-     ===================================================== -->
+     ================================ -->
 
 <div class="section">
   ОПЛАТЫ ЗА СМЕНУ
@@ -751,26 +644,15 @@ button {
 <thead>
 
 <tr>
-
-<th>
-  Оплата
-</th>
-
-<th>
-  Сумма
-</th>
-
-<th>
-  Комментарий
-</th>
-
+  <th>Оплата</th>
+  <th>Сумма</th>
+  <th>Комментарий</th>
 </tr>
 
 </thead>
 
 
 <tbody>
-
 
 <tr>
 
@@ -831,7 +713,6 @@ button {
 
 </tr>
 
-
 </tbody>
 
 </table>
@@ -846,9 +727,9 @@ button {
 </div>
 
 
-<!-- =====================================================
+<!-- ================================
      РАСХОДЫ
-     ===================================================== -->
+     ================================ -->
 
 <div class="section">
   РАСХОДЫ И ИЗЪЯТИЯ
@@ -860,19 +741,9 @@ button {
 <thead>
 
 <tr>
-
-<th>
-  Расход
-</th>
-
-<th>
-  Сумма
-</th>
-
-<th>
-  Комментарий
-</th>
-
+  <th>Расход</th>
+  <th>Сумма</th>
+  <th>Комментарий</th>
 </tr>
 
 </thead>
@@ -1075,9 +946,22 @@ button {
 </div>
 
 
-<!-- =====================================================
+<!-- ================================
+     ОЖИДАЕМЫЙ ОСТАТОК
+     ================================ -->
+
+<div class="expected">
+
+  ОЖИДАЕМЫЙ ОСТАТОК В КАССЕ:
+  <span id="expectedCash">0</span>
+  ₽
+
+</div>
+
+
+<!-- ================================
      ЗАКРЫТИЕ
-     ===================================================== -->
+     ================================ -->
 
 <div class="section">
   ЗАКРЫТИЕ СМЕНЫ
@@ -1089,8 +973,10 @@ button {
 </label>
 
 <input
-  type="time"
+  type="text"
   id="closeTime"
+  placeholder="Например, 22:00"
+  inputmode="numeric"
 >
 
 
@@ -1140,9 +1026,7 @@ button {
 </div>
 
 
-<!-- =====================================================
-     ОТКРЫТИЕ
-     ===================================================== -->
+<!-- ОТКРЫТИЕ -->
 
 <div class="report-section">
   ОТКРЫТИЕ СМЕНЫ
@@ -1157,8 +1041,7 @@ button {
   Бариста
 </td>
 
-<td id="rBarista">
-</td>
+<td id="rBarista"></td>
 
 </tr>
 
@@ -1169,8 +1052,7 @@ button {
   Время открытия
 </td>
 
-<td id="rOpenTime">
-</td>
+<td id="rOpenTime"></td>
 
 </tr>
 
@@ -1181,17 +1063,14 @@ button {
   Остаток наличных в кассе
 </td>
 
-<td id="rOpenCash">
-</td>
+<td id="rOpenCash"></td>
 
 </tr>
 
 </table>
 
 
-<!-- =====================================================
-     ОПЛАТЫ
-     ===================================================== -->
+<!-- ОПЛАТЫ -->
 
 <div class="report-section">
   ОПЛАТЫ ЗА СМЕНУ
@@ -1223,11 +1102,9 @@ button {
   Наличные
 </td>
 
-<td id="rCash">
-</td>
+<td id="rCash"></td>
 
-<td id="rCashComment">
-</td>
+<td id="rCashComment"></td>
 
 </tr>
 
@@ -1238,11 +1115,9 @@ button {
   Безнал (карта / QR)
 </td>
 
-<td id="rCard">
-</td>
+<td id="rCard"></td>
 
-<td id="rCardComment">
-</td>
+<td id="rCardComment"></td>
 
 </tr>
 
@@ -1258,9 +1133,7 @@ button {
 </div>
 
 
-<!-- =====================================================
-     РАСХОДЫ
-     ===================================================== -->
+<!-- РАСХОДЫ -->
 
 <div class="report-section">
   РАСХОДЫ И ИЗЪЯТИЯ
@@ -1292,11 +1165,9 @@ button {
   Бариста
 </td>
 
-<td id="rBaristaExpense">
-</td>
+<td id="rBaristaExpense"></td>
 
-<td id="rBaristaComment">
-</td>
+<td id="rBaristaComment"></td>
 
 </tr>
 
@@ -1307,11 +1178,9 @@ button {
   Поставщик 1
 </td>
 
-<td id="rSupplier1">
-</td>
+<td id="rSupplier1"></td>
 
-<td id="rSupplier1Comment">
-</td>
+<td id="rSupplier1Comment"></td>
 
 </tr>
 
@@ -1322,11 +1191,9 @@ button {
   Поставщик 2
 </td>
 
-<td id="rSupplier2">
-</td>
+<td id="rSupplier2"></td>
 
-<td id="rSupplier2Comment">
-</td>
+<td id="rSupplier2Comment"></td>
 
 </tr>
 
@@ -1337,11 +1204,9 @@ button {
   Поставщик 3
 </td>
 
-<td id="rSupplier3">
-</td>
+<td id="rSupplier3"></td>
 
-<td id="rSupplier3Comment">
-</td>
+<td id="rSupplier3Comment"></td>
 
 </tr>
 
@@ -1352,11 +1217,9 @@ button {
   Поставщик 4
 </td>
 
-<td id="rSupplier4">
-</td>
+<td id="rSupplier4"></td>
 
-<td id="rSupplier4Comment">
-</td>
+<td id="rSupplier4Comment"></td>
 
 </tr>
 
@@ -1367,11 +1230,9 @@ button {
   Изъятие
 </td>
 
-<td id="rWithdraw">
-</td>
+<td id="rWithdraw"></td>
 
-<td id="rWithdrawComment">
-</td>
+<td id="rWithdrawComment"></td>
 
 </tr>
 
@@ -1387,9 +1248,7 @@ button {
 </div>
 
 
-<!-- =====================================================
-     ЗАКРЫТИЕ
-     ===================================================== -->
+<!-- ЗАКРЫТИЕ -->
 
 <div class="report-section">
   ЗАКРЫТИЕ СМЕНЫ
@@ -1404,8 +1263,7 @@ button {
   Время закрытия
 </td>
 
-<td id="rCloseTime">
-</td>
+<td id="rCloseTime"></td>
 
 </tr>
 
@@ -1416,8 +1274,7 @@ button {
   Фактический остаток наличных в кассе
 </td>
 
-<td id="rCloseCash">
-</td>
+<td id="rCloseCash"></td>
 
 </tr>
 
@@ -1429,9 +1286,8 @@ button {
 
 <script>
 
-
 /* =====================================================
-   ПОЛУЧЕНИЕ ЗНАЧЕНИЙ
+   ПОЛУЧЕНИЕ ДАННЫХ
    ===================================================== */
 
 function val(id) {
@@ -1528,6 +1384,14 @@ function calculate() {
     num("withdraw");
 
 
+  /* Ожидаемый наличный остаток */
+
+  const expectedCash =
+    num("openCash") +
+    num("cash") -
+    expenseTotal;
+
+
   document.getElementById(
     "paymentTotal"
   ).textContent =
@@ -1539,11 +1403,17 @@ function calculate() {
   ).textContent =
     money(expenseTotal);
 
+
+  document.getElementById(
+    "expectedCash"
+  ).textContent =
+    money(expectedCash);
+
 }
 
 
 /* =====================================================
-   АВТОМАТИЧЕСКИЙ ПЕРЕСЧЁТ
+   ПЕРЕСЧЁТ ПРИ ВВОДЕ
    ===================================================== */
 
 document
@@ -1584,10 +1454,12 @@ function createReport() {
     val("barista")
   );
 
+
   setText(
     "rOpenTime",
     val("openTime")
   );
+
 
   setText(
     "rOpenCash",
@@ -1597,9 +1469,9 @@ function createReport() {
   );
 
 
-  /* ===================================================
+  /* =========================
      ОПЛАТЫ
-     =================================================== */
+     ========================= */
 
   setText(
     "rCash",
@@ -1607,6 +1479,7 @@ function createReport() {
       num("cash")
     ) + " ₽"
   );
+
 
   setText(
     "rCashComment",
@@ -1620,6 +1493,7 @@ function createReport() {
       num("card")
     ) + " ₽"
   );
+
 
   setText(
     "rCardComment",
@@ -1638,9 +1512,9 @@ function createReport() {
   );
 
 
-  /* ===================================================
+  /* =========================
      РАСХОДЫ
-     =================================================== */
+     ========================= */
 
   setText(
     "rBaristaExpense",
@@ -1648,6 +1522,7 @@ function createReport() {
       num("baristaExpense")
     ) + " ₽"
   );
+
 
   setText(
     "rBaristaComment",
@@ -1662,6 +1537,7 @@ function createReport() {
     ) + " ₽"
   );
 
+
   setText(
     "rSupplier1Comment",
     val("supplier1Comment")
@@ -1674,6 +1550,7 @@ function createReport() {
       num("supplier2")
     ) + " ₽"
   );
+
 
   setText(
     "rSupplier2Comment",
@@ -1688,6 +1565,7 @@ function createReport() {
     ) + " ₽"
   );
 
+
   setText(
     "rSupplier3Comment",
     val("supplier3Comment")
@@ -1701,6 +1579,7 @@ function createReport() {
     ) + " ₽"
   );
 
+
   setText(
     "rSupplier4Comment",
     val("supplier4Comment")
@@ -1713,6 +1592,7 @@ function createReport() {
       num("withdraw")
     ) + " ₽"
   );
+
 
   setText(
     "rWithdrawComment",
@@ -1735,9 +1615,9 @@ function createReport() {
   );
 
 
-  /* ===================================================
+  /* =========================
      ЗАКРЫТИЕ
-     =================================================== */
+     ========================= */
 
   setText(
     "rCloseTime",
@@ -1803,7 +1683,7 @@ async function makeJPEG() {
 
 
 /* =====================================================
-   СОХРАНЕНИЕ / ОТПРАВКА
+   СОХРАНИТЬ / ОТПРАВИТЬ
    ===================================================== */
 
 async function saveJPEG() {
@@ -1914,50 +1794,20 @@ async function saveJPEG() {
 
 
 /* =====================================================
-   АВТОМАТИЧЕСКОЕ ВРЕМЯ
-   ===================================================== */
-
-function setCurrentTime(id) {
-
-  const now =
-    new Date();
-
-
-  const hours =
-    String(
-      now.getHours()
-    ).padStart(2, "0");
-
-
-  const minutes =
-    String(
-      now.getMinutes()
-    ).padStart(2, "0");
-
-
-  document.getElementById(id).value =
-
-    hours +
-    ":" +
-    minutes;
-
-}
-
-
-/* =====================================================
-   ДАТА — НАМЕРЕННО ПУСТАЯ
+   ДАТА ПУСТАЯ
    ===================================================== */
 
 document.getElementById("date").value = "";
 
 
 /* =====================================================
-   ВРЕМЯ
+   ВРЕМЯ НЕ ЗАПОЛНЯЕМ
+   БАРИСТА ВВОДИТ САМА
    ===================================================== */
 
-setCurrentTime("openTime");
+document.getElementById("openTime").value = "";
 
-setCurrentTime("closeTime");
+document.getElementById("closeTime").value = "";
 
 
 /* =====================================================
