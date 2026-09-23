@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A5 — Отчёт смены</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#151515;
+color:#fff;
+font-family:Arial,sans-serif;
+padding:15px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.logo{
+text-align:center;
+font-size:32px;
+font-weight:900;
+letter-spacing:5px;
+margin:5px 0;
+}
+
+.title{
+text-align:center;
+font-size:21px;
+font-weight:700;
+margin-bottom:18px;
+}
+
+.block{
+background:#222;
+border:1px solid #3b3b3b;
+border-radius:12px;
+padding:15px;
+margin-bottom:12px;
+}
+
+h2{
+font-size:17px;
+margin:0 0 14px;
+}
+
+label{
+display:block;
+font-size:13px;
+color:#aaa;
+margin-bottom:5px;
+}
+
+input{
+width:100%;
+padding:12px;
+background:#111;
+border:1px solid #444;
+border-radius:8px;
+color:#fff;
+font-size:16px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border-bottom:1px solid #444;
+padding:7px 4px;
+text-align:left;
+font-size:14px;
+}
+
+th{
+color:#aaa;
+font-size:12px;
+}
+
+td input{
+padding:9px;
+font-size:15px;
+}
+
+.total{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+font-size:16px;
+padding-top:12px;
+}
+
+.result{
+background:#111;
+border:1px solid #444;
+border-radius:9px;
+padding:12px;
+margin-top:12px;
+}
+
+.result div{
+display:flex;
+justify-content:space-between;
+margin:6px 0;
+}
+
+button{
+width:100%;
+padding:15px;
+border:0;
+border-radius:10px;
+font-size:17px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.main{
+background:white;
+color:#111;
+}
+
+.dark{
+background:#303030;
+color:white;
+}
+
+#report{
+display:none;
+background:white;
+color:#111;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+}
+
+#report h1{
+text-align:center;
+font-size:20px;
+}
+
+#report h2{
+margin-top:20px;
+font-size:16px;
+}
+
+#report table{
+color:#111;
+}
+
+#report th,
+#report td{
+border:1px solid #777;
+padding:7px;
+}
+
+@media(max-width:550px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
+@media print{
+
+body{
+background:white;
+padding:0;
+}
+
+.container>*:not(#report){
+display:none!important;
+}
+
+#report{
+display:block!important;
+margin:0;
+padding:0;
+border:0;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">A5</div>
+<div class="title">ОТЧЁТ СМЕНЫ БАРИСТА</div>
+
+<div class="block">
+
+<div class="grid">
+
+<div>
+<label>Дата</label>
+<input id="date" type="date">
+</div>
+
+<div>
+<label>Бариста</label>
+<input id="barista" type="text">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="block">
+
+<h2>Открытие смены</h2>
+
+<div class="grid">
+
+<div>
+<label>Время</label>
+<input id="openTime" type="time">
+</div>
+
+<div>
+<label>Остаток наличных в кассе, ₽</label>
+<input id="openingCash" type="number" inputmode="decimal">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="block">
+
+<h2>Оплаты за смену</h2>
+
+<table>
+
+<tr>
+<th>Вид оплаты</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+
+<tr>
+<td>Наличные</td>
+<td><input id="cash" type="number" inputmode="decimal"></td>
+<td><input id="cashComment"></td>
+</tr>
+
+<tr>
+<td>Безнал (карта, QR-код)</td>
+<td><input id="card" type="number" inputmode="decimal"></td>
+<td><input id="cardComment"></td>
+</tr>
+
+<tr>
+<td>Прочее</td>
+<td><input id="other" type="number" inputmode="decimal"></td>
+<td><input id="otherComment"></td>
+</tr>
+
+</table>
+
+<div class="total">
+<span>ИТОГО ОПЛАТ</span>
+<span id="paymentTotal">0 ₽</span>
+</div>
+
+</div>
+
+
+<div class="block">
+
+<h2>Расходы и изъятия</h2>
+
+<table>
+
+<tr>
+<th>Назначение</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+
+<tr>
+<td>Бариста (зарплата, обед)</td>
+<td><input id="salary" type="number" inputmode="decimal"></td>
+<td><input id="salaryComment"></td>
+</tr>
+
+<tr>
+<td>Поставщик</td>
+<td><input id="supplier" type="number" inputmode="decimal"></td>
+<td><input id="supplierComment"></td>
+</tr>
+
+<tr>
+<td>Изъятие</td>
+<td><input id="withdraw" type="number" inputmode="decimal"></td>
+<td><input id="withdrawComment"></td>
+</tr>
+
+</table>
+
+<div class="total">
+<span>ИТОГО РАСХОДОВ</span>
+<span id="expenseTotal">0 ₽</span>
+</div>
+
+</div>
+
+
+<div class="block">
+
+<h2>Закрытие смены</h2>
+
+<div class="grid">
+
+<div>
+<label>Время</label>
+<input id="closeTime" type="time">
+</div>
+
+<div>
+<label>Фактический остаток наличных, ₽</label>
+<input id="closingCash" type="number" inputmode="decimal">
+</div>
+
+</div>
+
+
+<div class="result">
+
+<div>
+<span>Ожидаемый остаток</span>
+<strong id="expectedCash">0 ₽</strong>
+</div>
+
+<div>
+<span>Разница</span>
+<strong id="difference">—</strong>
+</div>
+
+</div>
+
+<br>
+
+<label>Подпись / комментарий</label>
+<input id="signature">
+
+</div>
+
+
+<button class="main" onclick="createReport()">
+СФОРМИРОВАТЬ ОТЧЁТ
+</button>
+
+<button class="dark" onclick="window.print()">
+СОХРАНИТЬ / ПЕЧАТЬ PDF
+</button>
+
+
+<div id="report"></div>
+
+</div>
+
+
+<script>
+
+function number(id){
+
+let value=parseFloat(document.getElementById(id).value);
+
+return isNaN(value)?0:value;
+
+}
+
+
+function money(value){
+
+return new Intl.NumberFormat('ru-RU',{
+maximumFractionDigits:2
+}).format(value)+' ₽';
+
+}
+
+
+function calculate(){
+
+let opening=number('openingCash');
+
+let cash=number('cash');
+
+let card=number('card');
+
+let other=number('other');
+
+let salary=number('salary');
+
+let supplier=number('supplier');
+
+let withdraw=number('withdraw');
+
+
+let payments=cash+card+other;
+
+let expenses=salary+supplier+withdraw;
+
+
+/*
+Ожидаемый остаток наличных:
+
+остаток на открытии
++
+наличные
+-
+все расходы
+-
+изъятие
+*/
+
+let expected=opening+cash-salary-supplier-withdraw;
+
+
+document.getElementById('paymentTotal').innerText=
+money(payments);
+
+document.getElementById('expenseTotal').innerText=
+money(expenses);
+
+document.getElementById('expectedCash').innerText=
+money(expected);
+
+
+let closing=document.getElementById('closingCash').value;
+
+if(closing===""){
+
+document.getElementById('difference').innerText="—";
+
+}else{
+
+let difference=number('closingCash')-expected;
+
+document.getElementById('difference').innerText=
+money(difference);
+
+}
+
+return{
+opening,
+cash,
+card,
+other,
+payments,
+salary,
+supplier,
+withdraw,
+expenses,
+expected,
+closing:closing===""?null:number('closingCash')
+};
+
+}
+
+
+document.querySelectorAll('input').forEach(function(input){
+
+input.addEventListener('input',calculate);
+
+});
+
+
+function dateFormat(value){
+
+if(!value)return "";
+
+let p=value.split('-');
+
+return p[2]+'.'+p[1]+'.'+p[0];
+
+}
+
+
+function createReport(){
+
+let data=calculate();
+
+let report=document.getElementById('report');
+
+let difference="—";
+
+if(data.closing!==null){
+
+difference=money(data.closing-data.expected);
+
+}
+
+
+report.innerHTML=`
+
+<h1>ОТЧЁТ СМЕНЫ БАРИСТА</h1>
+
+<p><b>Дата:</b> ${dateFormat(document.getElementById('date').value)}</p>
+
+<p><b>Бариста:</b> ${document.getElementById('barista').value}</p>
+
+
+<h2>Открытие смены</h2>
+
+<p><b>Время:</b>
+${document.getElementById('openTime').value}
+</p>
+
+<p><b>Остаток наличных в кассе:</b>
+${money(data.opening)}
+</p>
+
+
+<h2>Оплаты за смену</h2>
+
+<table>
+
+<tr>
+<th>Вид оплаты</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+
+<tr>
+<td>Наличные</td>
+<td>${money(data.cash)}</td>
+<td>${document.getElementById('cashComment').value}</td>
+</tr>
+
+<tr>
+<td>Безнал (карта, QR-код)</td>
+<td>${money(data.card)}</td>
+<td>${document.getElementById('cardComment').value}</td>
+</tr>
+
+<tr>
+<td>Прочее</td>
+<td>${money(data.other)}</td>
+<td>${document.getElementById('otherComment').value}</td>
+</tr>
+
+<tr>
+<th>ИТОГО</th>
+<th>${money(data.payments)}</th>
+<th></th>
+</tr>
+
+</table>
+
+
+<h2>Расходы и изъятия</h2>
+
+<table>
+
+<tr>
+<th>Назначение</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+
+<tr>
+<td>Бариста (зарплата, обед)</td>
+<td>${money(data.salary)}</td>
+<td>${document.getElementById('salaryComment').value}</td>
+</tr>
+
+<tr>
+<td>Поставщик</td>
+<td>${money(data.supplier)}</td>
+<td>${document.getElementById('supplierComment').value}</td>
+</tr>
+
+<tr>
+<td>Изъятие</td>
+<td>${money(data.withdraw)}</td>
+<td>${document.getElementById('withdrawComment').value}</td>
+</tr>
+
+<tr>
+<th>ИТОГО РАСХОДОВ</th>
+<th>${money(data.expenses)}</th>
+<th></th>
+</tr>
+
+</table>
+
+
+<h2>Закрытие смены</h2>
+
+<p><b>Время:</b>
+${document.getElementById('closeTime').value}
+</p>
+
+<p><b>Ожидаемый остаток:</b>
+${money(data.expected)}
+</p>
+
+<p><b>Фактический остаток:</b>
+${data.closing===null?"":money(data.closing)}
+</p>
+
+<p><b>Разница:</b>
+${difference}
+</p>
+
+<p><b>Подпись / комментарий:</b>
+${document.getElementById('signature').value}
+</p>
+
+`;
+
+
+report.style.display="block";
+
+report.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+let now=new Date();
+
+document.getElementById('date').value=
+now.toISOString().split('T')[0];
+
+document.getElementById('openTime').value=
+now.toTimeString().slice(0,5);
+
+calculate();
+
+</script>
+
+</body>
+</html>
