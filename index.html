@@ -30,40 +30,32 @@ body {
   max-width: 100%;
   margin: 0;
   padding: 0;
-
   overflow-x: hidden;
 }
 
 body {
   background: #111;
   color: #fff;
-
   font-family: Arial, sans-serif;
-
   padding: 10px;
 }
 
 .container {
   width: 100%;
   max-width: 700px;
-
   margin: 0 auto;
-
   overflow: hidden;
 }
 
 
 /* =====================================================
-   ЗАГОЛОВОК
+   ЗАГОЛОВОК ФОРМЫ
    ===================================================== */
 
 h1 {
   width: 100%;
-
   margin: 8px 0 20px;
-
   text-align: center;
-
   font-size: 23px;
   line-height: 1.15;
 }
@@ -75,9 +67,7 @@ h1 {
 
 label {
   display: block;
-
   margin: 11px 0 5px;
-
   font-size: 16px;
   line-height: 1.2;
 }
@@ -123,7 +113,7 @@ textarea {
 
 
 /* =====================================================
-   ЗАГОЛОВКИ РАЗДЕЛОВ
+   ЗАГОЛОВКИ РАЗДЕЛОВ ФОРМЫ
    ===================================================== */
 
 .section {
@@ -135,7 +125,6 @@ textarea {
   padding: 11px 12px;
 
   background: #333;
-
   color: #fff;
 
   font-size: 18px;
@@ -155,12 +144,9 @@ textarea {
   min-width: 0 !important;
 
   table-layout: fixed !important;
-
   border-collapse: collapse;
 
   margin: 0;
-
-  overflow: hidden;
 }
 
 .form-table th,
@@ -182,7 +168,7 @@ textarea {
 
 
 /* -----------------------------------------------------
-   КОЛОНКИ
+   КОЛОНКИ ФОРМЫ
    ----------------------------------------------------- */
 
 .form-table th:nth-child(1),
@@ -202,7 +188,7 @@ textarea {
 
 
 /* -----------------------------------------------------
-   ЗАГОЛОВКИ
+   ЗАГОЛОВКИ ТАБЛИЦ
    ----------------------------------------------------- */
 
 .form-table th {
@@ -211,7 +197,7 @@ textarea {
   font-size: 13px;
   font-weight: 600;
 
-  line-height: 1.1;
+  line-height: 1.05;
 
   text-align: center;
 }
@@ -233,7 +219,7 @@ textarea {
 
 
 /* -----------------------------------------------------
-   ВСЕ ПОЛЯ ВНУТРИ ТАБЛИЦЫ
+   ПОЛЯ ВНУТРИ ТАБЛИЦ
    ----------------------------------------------------- */
 
 .form-table input,
@@ -253,11 +239,9 @@ textarea {
   padding: 7px !important;
 
   border: 1px solid #555;
-
   border-radius: 6px;
 
   background: #222;
-
   color: #fff;
 
   font-size: 14px !important;
@@ -271,7 +255,7 @@ textarea {
 
 
 /* =====================================================
-   ИТОГО
+   ИТОГО В ФОРМЕ
    ===================================================== */
 
 .total {
@@ -342,12 +326,12 @@ button {
 
 
 /* =====================================================
-   ЛОГО
+   A5
    ===================================================== */
 
 .report-logo {
 
-  font-size: 64px;
+  font-size: 68px;
 
   font-weight: 700;
 
@@ -358,12 +342,12 @@ button {
 
 
 /* =====================================================
-   НАЗВАНИЕ
+   НАЗВАНИЕ ОТЧЁТА
    ===================================================== */
 
 .report-title {
 
-  font-size: 39px;
+  font-size: 44px;
 
   font-weight: 500;
 
@@ -379,27 +363,27 @@ button {
 
 .report-date {
 
-  font-size: 28px;
+  font-size: 31px;
 
   margin-bottom: 22px;
 }
 
 
 /* =====================================================
-   ЗАГОЛОВОК РАЗДЕЛА В ОТЧЁТЕ
+   ЗАГОЛОВКИ РАЗДЕЛОВ
    ===================================================== */
 
 .report-section {
 
   margin-top: 20px;
 
-  padding: 11px 14px;
+  padding: 13px 15px;
 
   background: #222;
 
   color: #fff;
 
-  font-size: 28px;
+  font-size: 31px;
 
   font-weight: 500;
 
@@ -408,7 +392,7 @@ button {
 
 
 /* =====================================================
-   ТАБЛИЦЫ ОТЧЁТА
+   ТАБЛИЦЫ ГОТОВОГО ОТЧЁТА
    ===================================================== */
 
 .report-table {
@@ -425,9 +409,9 @@ button {
 
   border: 2px solid #222;
 
-  padding: 11px 13px;
+  padding: 13px 15px;
 
-  font-size: 24px;
+  font-size: 27px;
 
   line-height: 1.15;
 
@@ -447,7 +431,7 @@ button {
 
 
 /* =====================================================
-   ОТКРЫТИЕ — ЛЕВАЯ КОЛОНКА УЖЕ
+   ОТКРЫТИЕ СМЕНЫ
    ===================================================== */
 
 .report-opening td:first-child {
@@ -521,7 +505,7 @@ button {
 
 .report-total {
 
-  padding: 12px 14px;
+  padding: 14px 15px;
 
   border: 2px solid #222;
 
@@ -529,14 +513,14 @@ button {
 
   text-align: right;
 
-  font-size: 27px;
+  font-size: 30px;
 
   font-weight: 500;
 }
 
 
 /* =====================================================
-   ЗАКРЫТИЕ
+   ЗАКРЫТИЕ СМЕНЫ
    ===================================================== */
 
 .report-closing td:first-child {
@@ -555,14 +539,14 @@ button {
 
 .report-closing td {
 
-  font-size: 25px;
+  font-size: 28px;
 
-  padding: 13px;
+  padding: 14px;
 }
 
 
 /* =====================================================
-   IPHONE / МОБИЛЬНЫЕ
+   МОБИЛЬНАЯ ФОРМА
    ===================================================== */
 
 @media screen and (max-width: 600px) {
@@ -1185,7 +1169,7 @@ button {
 
 
 <!-- =====================================================
-     ОТКРЫТИЕ
+     ОТКРЫТИЕ СМЕНЫ
      ===================================================== -->
 
 <div class="report-section">
@@ -1438,7 +1422,7 @@ button {
 
 
 <!-- =====================================================
-     ЗАКРЫТИЕ
+     ЗАКРЫТИЕ СМЕНЫ
      ===================================================== -->
 
 <div class="report-section">
@@ -1535,31 +1519,22 @@ function setText(id, value) {
 function formatDate(date) {
 
   if (!date) {
-
     return "—";
-
   }
-
 
   const parts =
     date.split("-");
 
-
   if (parts.length !== 3) {
-
     return date;
-
   }
 
-
   return (
-
     parts[2] +
     "." +
     parts[1] +
     "." +
     parts[0]
-
   );
 
 }
@@ -1571,11 +1546,9 @@ function formatDate(date) {
 
 function calculate() {
 
-
   /* Только наличные + безнал */
 
   const paymentTotal =
-
     num("cash") +
     num("card");
 
@@ -1583,31 +1556,23 @@ function calculate() {
   /* Все расходы */
 
   const expenseTotal =
-
     num("baristaExpense") +
-
     num("supplier1") +
-
     num("supplier2") +
-
     num("supplier3") +
-
     num("supplier4") +
-
     num("withdraw");
 
 
   document.getElementById(
     "paymentTotal"
   ).textContent =
-
     money(paymentTotal);
 
 
   document.getElementById(
     "expenseTotal"
   ).textContent =
-
     money(expenseTotal);
 
 }
@@ -1630,11 +1595,10 @@ document
 
 
 /* =====================================================
-   СОЗДАНИЕ ГОТОВОГО ОТЧЁТА
+   СОЗДАНИЕ ОТЧЁТА
    ===================================================== */
 
 function createReport() {
-
 
   calculate();
 
@@ -1704,7 +1668,6 @@ function createReport() {
 
 
   const paymentTotal =
-
     num("cash") +
     num("card");
 
@@ -1804,17 +1767,11 @@ function createReport() {
 
 
   const expenseTotal =
-
     num("baristaExpense") +
-
     num("supplier1") +
-
     num("supplier2") +
-
     num("supplier3") +
-
     num("supplier4") +
-
     num("withdraw");
 
 
@@ -1850,7 +1807,6 @@ function createReport() {
 
 async function makeJPEG() {
 
-
   createReport();
 
 
@@ -1859,13 +1815,9 @@ async function makeJPEG() {
 
 
   const canvas =
-
     await html2canvas(
-
       report,
-
       {
-
         scale: 2,
 
         backgroundColor: "#ffffff",
@@ -1873,21 +1825,16 @@ async function makeJPEG() {
         useCORS: true,
 
         logging: false
-
       }
-
     );
 
 
   return new Promise(resolve => {
 
-
     canvas.toBlob(
 
       blob => {
-
         resolve(blob);
-
       },
 
       "image/jpeg",
@@ -1896,21 +1843,18 @@ async function makeJPEG() {
 
     );
 
-
   });
 
 }
 
 
 /* =====================================================
-   СОХРАНИТЬ / ОТПРАВИТЬ
+   СОХРАНИТЬ / ОТПРАВИТЬ JPEG
    ===================================================== */
 
 async function saveJPEG() {
 
-
   try {
-
 
     const blob =
       await makeJPEG();
@@ -1922,7 +1866,6 @@ async function saveJPEG() {
 
 
     const file =
-
       new File(
 
         [blob],
@@ -1932,16 +1875,14 @@ async function saveJPEG() {
         ".jpg",
 
         {
-
           type: "image/jpeg"
-
         }
 
       );
 
 
     /* -----------------------------------------------
-       iPhone / Android — меню «Поделиться»
+       iPhone / Android — Поделиться
        ----------------------------------------------- */
 
     if (
@@ -1951,13 +1892,10 @@ async function saveJPEG() {
       navigator.canShare &&
 
       navigator.canShare({
-
         files: [file]
-
       })
 
     ) {
-
 
       await navigator.share({
 
@@ -1968,14 +1906,12 @@ async function saveJPEG() {
 
       });
 
-
     }
 
     else {
 
-
       /* ---------------------------------------------
-         Если Share API недоступен
+         Обычное скачивание
          --------------------------------------------- */
 
       const url =
@@ -1986,12 +1922,10 @@ async function saveJPEG() {
         document.createElement("a");
 
 
-      a.href =
-        url;
+      a.href = url;
 
 
       a.download =
-
         "A5_Отчёт_" +
         date +
         ".jpg";
@@ -2009,9 +1943,7 @@ async function saveJPEG() {
       setTimeout(
 
         () => {
-
           URL.revokeObjectURL(url);
-
         },
 
         1000
@@ -2025,12 +1957,10 @@ async function saveJPEG() {
 
   catch (error) {
 
-
     console.error(error);
 
-
     alert(
-      "Не удалось открыть меню отправки. Попробуйте нажать кнопку ещё раз."
+      "Не удалось открыть меню отправки. Попробуйте ещё раз."
     );
 
   }
@@ -2039,25 +1969,22 @@ async function saveJPEG() {
 
 
 /* =====================================================
-   ВРЕМЯ
+   АВТОМАТИЧЕСКОЕ ВРЕМЯ
    ===================================================== */
 
 function setCurrentTime(id) {
-
 
   const now =
     new Date();
 
 
   const hours =
-
     String(
       now.getHours()
     ).padStart(2, "0");
 
 
   const minutes =
-
     String(
       now.getMinutes()
     ).padStart(2, "0");
@@ -2073,21 +2000,25 @@ function setCurrentTime(id) {
 
 
 /* =====================================================
-   ВАЖНО:
-   ДАТУ НЕ ЗАПОЛНЯЕМ АВТОМАТИЧЕСКИ
+   ДАТА НАМЕРЕННО ПУСТАЯ
+   БАРИСТА ВЫБИРАЕТ ЕЁ САМ
    ===================================================== */
 
 document.getElementById("date").value = "";
 
 
-/* Время можно поставить автоматически */
+/* =====================================================
+   ВРЕМЯ ПОДСТАВЛЯЕТСЯ АВТОМАТИЧЕСКИ
+   ===================================================== */
 
 setCurrentTime("openTime");
 
 setCurrentTime("closeTime");
 
 
-/* Первый расчёт */
+/* =====================================================
+   ПЕРВЫЙ РАСЧЁТ
+   ===================================================== */
 
 calculate();
 
