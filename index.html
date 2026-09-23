@@ -1,43 +1,85 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>A5 — Отчёт смены</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+
 <style>
+
+/* =====================================================
+   ОСНОВА
+   ===================================================== */
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
+  width: 100%;
+  max-width: 100%;
   margin: 0;
-  padding: 12px;
+  padding: 0;
+
+  overflow-x: hidden;
+}
+
+body {
   background: #111;
   color: #fff;
+
   font-family: Arial, sans-serif;
+
+  padding: 10px;
 }
 
 .container {
   width: 100%;
   max-width: 700px;
+
   margin: 0 auto;
+
+  overflow: hidden;
 }
 
+
+/* =====================================================
+   ЗАГОЛОВОК
+   ===================================================== */
+
 h1 {
+  width: 100%;
+
+  margin: 8px 0 20px;
+
   text-align: center;
+
   font-size: 23px;
-  margin: 5px 0 18px;
+  line-height: 1.15;
 }
+
+
+/* =====================================================
+   ОБЫЧНЫЕ ПОЛЯ
+   ===================================================== */
 
 label {
   display: block;
-  margin: 10px 0 5px;
-  font-size: 15px;
+
+  margin: 11px 0 5px;
+
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 input,
@@ -50,19 +92,28 @@ button {
 input,
 select,
 textarea {
+  display: block;
+
   width: 100%;
   max-width: 100%;
   min-width: 0;
 
+  box-sizing: border-box;
+
   padding: 9px;
 
   border: 1px solid #555;
-  border-radius: 5px;
+  border-radius: 6px;
 
   background: #222;
   color: #fff;
 
-  font-size: 15px;
+  font-size: 16px;
+}
+
+input[type="date"],
+input[type="time"] {
+  min-height: 48px;
 }
 
 textarea {
@@ -70,119 +121,193 @@ textarea {
   min-height: 38px;
 }
 
-.section {
-  margin-top: 18px;
-  margin-bottom: 6px;
 
-  padding: 9px 10px;
+/* =====================================================
+   ЗАГОЛОВКИ РАЗДЕЛОВ
+   ===================================================== */
+
+.section {
+  width: 100%;
+
+  margin-top: 20px;
+  margin-bottom: 7px;
+
+  padding: 11px 12px;
 
   background: #333;
+
   color: #fff;
 
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
+
+  line-height: 1.1;
 }
 
 
-/* =========================
+/* =====================================================
    ТАБЛИЦЫ ФОРМЫ
-   ========================= */
+   ===================================================== */
 
 .form-table {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
 
-  table-layout: fixed;
+  table-layout: fixed !important;
+
   border-collapse: collapse;
+
+  margin: 0;
+
+  overflow: hidden;
 }
 
 .form-table th,
 .form-table td {
-  min-width: 0;
-  max-width: 33.333%;
+  min-width: 0 !important;
+  max-width: 100% !important;
 
-  padding: 5px;
+  padding: 4px;
 
   border: 1px solid #444;
 
   vertical-align: middle;
+
   overflow: hidden;
-}
 
-.form-table th {
-  background: #222;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.form-table th:first-child,
-.form-table td:first-child {
-  width: 33.333%;
-
-  white-space: normal;
-  overflow-wrap: anywhere;
   word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+
+/* -----------------------------------------------------
+   КОЛОНКИ
+   ----------------------------------------------------- */
+
+.form-table th:nth-child(1),
+.form-table td:nth-child(1) {
+  width: 32% !important;
 }
 
 .form-table th:nth-child(2),
 .form-table td:nth-child(2) {
-  width: 33.333%;
+  width: 27% !important;
 }
 
 .form-table th:nth-child(3),
 .form-table td:nth-child(3) {
-  width: 33.333%;
+  width: 41% !important;
+}
+
+
+/* -----------------------------------------------------
+   ЗАГОЛОВКИ
+   ----------------------------------------------------- */
+
+.form-table th {
+  background: #222;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.1;
+
+  text-align: center;
+}
+
+
+/* -----------------------------------------------------
+   ПЕРВАЯ КОЛОНКА
+   ----------------------------------------------------- */
+
+.form-table td:first-child {
+  white-space: normal !important;
+
+  word-break: normal !important;
+
+  overflow-wrap: anywhere !important;
+
+  line-height: 1.15;
+}
+
+
+/* -----------------------------------------------------
+   ВСЕ ПОЛЯ ВНУТРИ ТАБЛИЦЫ
+   ----------------------------------------------------- */
+
+.form-table input,
+.form-table textarea,
+.form-table select {
+
+  display: block;
+
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  box-sizing: border-box !important;
+
+  margin: 0 !important;
+
+  padding: 7px !important;
+
+  border: 1px solid #555;
+
+  border-radius: 6px;
+
+  background: #222;
+
+  color: #fff;
+
+  font-size: 14px !important;
+
+  overflow: hidden;
 }
 
 .form-table input {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-
   height: 38px;
-
-  margin: 0;
-  padding: 7px;
-
-  font-size: 14px;
 }
 
-.form-table textarea {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
 
-  min-height: 38px;
-
-  margin: 0;
-  padding: 7px;
-
-  font-size: 14px;
-}
+/* =====================================================
+   ИТОГО
+   ===================================================== */
 
 .total {
+  width: 100%;
+
   margin-top: 8px;
 
-  padding: 10px;
+  padding: 11px;
 
   background: #222;
+
   border: 1px solid #555;
 
   text-align: right;
 
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
 }
 
-button {
-  width: 100%;
 
-  margin-top: 20px;
-  padding: 14px;
+/* =====================================================
+   КНОПКА
+   ===================================================== */
+
+button {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  margin-top: 22px;
+
+  padding: 15px;
 
   border: none;
-  border-radius: 6px;
+  border-radius: 7px;
 
   background: #fff;
   color: #000;
@@ -194,11 +319,12 @@ button {
 }
 
 
-/* =========================
-   ГОТОВЫЙ ОТЧЁТ
-   ========================= */
+/* =====================================================
+   ГОТОВЫЙ ОТЧЁТ ДЛЯ JPEG
+   ===================================================== */
 
 #report {
+
   position: absolute;
 
   left: -10000px;
@@ -215,10 +341,14 @@ button {
 }
 
 
-/* ЛОГО */
+/* =====================================================
+   ЛОГО
+   ===================================================== */
 
 .report-logo {
-  font-size: 62px;
+
+  font-size: 64px;
+
   font-weight: 700;
 
   line-height: 1;
@@ -227,44 +357,62 @@ button {
 }
 
 
-/* ЗАГОЛОВОК */
+/* =====================================================
+   НАЗВАНИЕ
+   ===================================================== */
 
 .report-title {
-  font-size: 38px;
+
+  font-size: 39px;
+
   font-weight: 500;
 
-  margin-bottom: 16px;
+  line-height: 1.1;
+
+  margin-bottom: 17px;
 }
 
 
-/* ДАТА */
+/* =====================================================
+   ДАТА
+   ===================================================== */
 
 .report-date {
-  font-size: 27px;
+
+  font-size: 28px;
 
   margin-bottom: 22px;
 }
 
 
-/* ЗАГОЛОВКИ РАЗДЕЛОВ */
+/* =====================================================
+   ЗАГОЛОВОК РАЗДЕЛА В ОТЧЁТЕ
+   ===================================================== */
 
 .report-section {
+
   margin-top: 20px;
-  margin-bottom: 0;
 
   padding: 11px 14px;
 
   background: #222;
+
   color: #fff;
 
-  font-size: 27px;
+  font-size: 28px;
+
   font-weight: 500;
+
+  line-height: 1.1;
 }
 
 
-/* ОБЩИЕ ТАБЛИЦЫ ОТЧЁТА */
+/* =====================================================
+   ТАБЛИЦЫ ОТЧЁТА
+   ===================================================== */
 
 .report-table {
+
   width: 100%;
 
   border-collapse: collapse;
@@ -274,6 +422,7 @@ button {
 
 .report-table th,
 .report-table td {
+
   border: 2px solid #222;
 
   padding: 11px 13px;
@@ -283,40 +432,52 @@ button {
   line-height: 1.15;
 
   vertical-align: middle;
+
+  overflow-wrap: anywhere;
 }
 
 .report-table th {
-  font-weight: 500;
+
   background: #f2f2f2;
+
+  font-weight: 500;
+
+  text-align: center;
 }
 
 
-/* =========================
-   ОТКРЫТИЕ
-   ЛЕВАЯ КОЛОНКА УЖЕ
-   ========================= */
+/* =====================================================
+   ОТКРЫТИЕ — ЛЕВАЯ КОЛОНКА УЖЕ
+   ===================================================== */
 
 .report-opening td:first-child {
+
   width: 35%;
+
+  text-align: left;
 }
 
 .report-opening td:nth-child(2) {
+
   width: 65%;
+
   text-align: left;
 }
 
 
-/* =========================
+/* =====================================================
    ОПЛАТЫ
-   ========================= */
+   ===================================================== */
 
-.report-payments th:first-child,
-.report-payments td:first-child {
+.report-payments th:nth-child(1),
+.report-payments td:nth-child(1) {
+
   width: 38%;
 }
 
 .report-payments th:nth-child(2),
 .report-payments td:nth-child(2) {
+
   width: 22%;
 
   text-align: right;
@@ -324,21 +485,24 @@ button {
 
 .report-payments th:nth-child(3),
 .report-payments td:nth-child(3) {
+
   width: 40%;
 }
 
 
-/* =========================
+/* =====================================================
    РАСХОДЫ
-   ========================= */
+   ===================================================== */
 
-.report-expenses th:first-child,
-.report-expenses td:first-child {
+.report-expenses th:nth-child(1),
+.report-expenses td:nth-child(1) {
+
   width: 38%;
 }
 
 .report-expenses th:nth-child(2),
 .report-expenses td:nth-child(2) {
+
   width: 22%;
 
   text-align: right;
@@ -346,87 +510,201 @@ button {
 
 .report-expenses th:nth-child(3),
 .report-expenses td:nth-child(3) {
+
   width: 40%;
 }
 
 
-/* =========================
-   ИТОГО
-   ========================= */
+/* =====================================================
+   ИТОГ В ГОТОВОМ ОТЧЁТЕ
+   ===================================================== */
 
 .report-total {
+
   padding: 12px 14px;
 
   border: 2px solid #222;
+
   border-top: none;
 
   text-align: right;
 
-  font-size: 26px;
+  font-size: 27px;
+
   font-weight: 500;
 }
 
 
-/* =========================
+/* =====================================================
    ЗАКРЫТИЕ
-   ========================= */
+   ===================================================== */
 
 .report-closing td:first-child {
+
   width: 35%;
+
+  text-align: left;
 }
 
 .report-closing td:nth-child(2) {
+
   width: 65%;
+
   text-align: left;
 }
 
 .report-closing td {
+
   font-size: 25px;
 
   padding: 13px;
 }
 
 
-/* =========================
-   МОБИЛЬНАЯ ФОРМА
-   ========================= */
+/* =====================================================
+   IPHONE / МОБИЛЬНЫЕ
+   ===================================================== */
 
-@media (max-width: 480px) {
+@media screen and (max-width: 600px) {
 
   body {
+
+    width: 100%;
+    max-width: 100%;
+
     padding: 8px;
+
+    overflow-x: hidden;
+  }
+
+  .container {
+
+    width: 100%;
+    max-width: 100%;
+
+    overflow: hidden;
   }
 
   h1 {
+
     font-size: 21px;
+
+    margin-top: 8px;
+    margin-bottom: 18px;
   }
 
   .section {
-    font-size: 16px;
+
+    font-size: 17px;
+
+    padding: 11px;
+  }
+
+  .form-table {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    table-layout: fixed !important;
+
+    margin: 0 !important;
   }
 
   .form-table th,
   .form-table td {
-    padding: 4px;
+
+    padding: 3px !important;
+
+    min-width: 0 !important;
+
+    max-width: 100% !important;
+
+    overflow: hidden !important;
   }
 
   .form-table th {
-    font-size: 12px;
+
+    font-size: 12px !important;
+
+    line-height: 1.05 !important;
+  }
+
+  .form-table td {
+
+    font-size: 14px !important;
+
+    line-height: 1.1 !important;
+  }
+
+  .form-table input,
+  .form-table textarea,
+  .form-table select {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    height: 38px !important;
+
+    padding: 5px !important;
+
+    margin: 0 !important;
+
+    font-size: 13px !important;
+  }
+
+  .total {
+
+    font-size: 17px;
+
+    padding: 10px;
+  }
+
+}
+
+
+/* =====================================================
+   ОЧЕНЬ УЗКИЙ ЭКРАН
+   ===================================================== */
+
+@media screen and (max-width: 380px) {
+
+  body {
+
+    padding: 5px;
+  }
+
+  .form-table th,
+  .form-table td {
+
+    padding: 2px !important;
+  }
+
+  .form-table th {
+
+    font-size: 11px !important;
+  }
+
+  .form-table td {
+
+    font-size: 13px !important;
   }
 
   .form-table input,
   .form-table textarea {
-    font-size: 13px;
-    padding: 6px;
-  }
 
-  .form-table input {
-    height: 36px;
+    font-size: 12px !important;
+
+    padding: 4px !important;
   }
 
 }
 
 </style>
+
 </head>
 
 
@@ -435,22 +713,38 @@ button {
 
 <div class="container">
 
-<h1>A5 — ОТЧЁТ СМЕНЫ БАРИСТА</h1>
+
+<!-- =====================================================
+     ЗАГОЛОВОК
+     ===================================================== -->
+
+<h1>
+  A5 — ОТЧЁТ СМЕНЫ БАРИСТА
+</h1>
 
 
-<!-- ДАТА -->
+<!-- =====================================================
+     ДАТА
+     ===================================================== -->
 
-<label>Дата</label>
+<label>
+  Дата
+</label>
 
 <input
   type="date"
   id="date"
+  value=""
 >
 
 
-<!-- БАРИСТА -->
+<!-- =====================================================
+     БАРИСТА
+     ===================================================== -->
 
-<label>Бариста</label>
+<label>
+  Бариста
+</label>
 
 <select id="barista">
 
@@ -465,9 +759,9 @@ button {
 </select>
 
 
-<!-- =========================
+<!-- =====================================================
      ОТКРЫТИЕ
-     ========================= -->
+     ===================================================== -->
 
 <div class="section">
   ОТКРЫТИЕ СМЕНЫ
@@ -496,9 +790,9 @@ button {
 >
 
 
-<!-- =========================
+<!-- =====================================================
      ОПЛАТЫ
-     ========================= -->
+     ===================================================== -->
 
 <div class="section">
   ОПЛАТЫ ЗА СМЕНУ
@@ -531,8 +825,6 @@ button {
 <tbody>
 
 
-<!-- НАЛИЧНЫЕ -->
-
 <tr>
 
 <td>
@@ -561,8 +853,6 @@ button {
 
 </tr>
 
-
-<!-- БЕЗНАЛ -->
 
 <tr>
 
@@ -601,17 +891,15 @@ button {
 <div class="total">
 
   ИТОГО:
-  <span id="paymentTotal">
-    0
-  </span>
+  <span id="paymentTotal">0</span>
   ₽
 
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      РАСХОДЫ
-     ========================= -->
+     ===================================================== -->
 
 <div class="section">
   РАСХОДЫ И ИЗЪЯТИЯ
@@ -644,8 +932,6 @@ button {
 <tbody>
 
 
-<!-- БАРИСТА -->
-
 <tr>
 
 <td>
@@ -674,8 +960,6 @@ button {
 
 </tr>
 
-
-<!-- ПОСТАВЩИК 1 -->
 
 <tr>
 
@@ -706,8 +990,6 @@ button {
 </tr>
 
 
-<!-- ПОСТАВЩИК 2 -->
-
 <tr>
 
 <td>
@@ -736,8 +1018,6 @@ button {
 
 </tr>
 
-
-<!-- ПОСТАВЩИК 3 -->
 
 <tr>
 
@@ -768,8 +1048,6 @@ button {
 </tr>
 
 
-<!-- ПОСТАВЩИК 4 -->
-
 <tr>
 
 <td>
@@ -798,8 +1076,6 @@ button {
 
 </tr>
 
-
-<!-- ИЗЪЯТИЕ -->
 
 <tr>
 
@@ -838,17 +1114,15 @@ button {
 <div class="total">
 
   ИТОГО РАСХОДОВ:
-  <span id="expenseTotal">
-    0
-  </span>
+  <span id="expenseTotal">0</span>
   ₽
 
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      ЗАКРЫТИЕ
-     ========================= -->
+     ===================================================== -->
 
 <div class="section">
   ЗАКРЫТИЕ СМЕНЫ
@@ -885,9 +1159,9 @@ button {
 </div>
 
 
-<!-- ==================================================
+<!-- =====================================================
      ГОТОВЫЙ ОТЧЁТ
-     ================================================== -->
+     ===================================================== -->
 
 <div id="report">
 
@@ -910,9 +1184,9 @@ button {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      ОТКРЫТИЕ
-     ========================= -->
+     ===================================================== -->
 
 <div class="report-section">
   ОТКРЫТИЕ СМЕНЫ
@@ -961,9 +1235,9 @@ button {
 </table>
 
 
-<!-- =========================
+<!-- =====================================================
      ОПЛАТЫ
-     ========================= -->
+     ===================================================== -->
 
 <div class="report-section">
   ОПЛАТЫ ЗА СМЕНУ
@@ -1032,9 +1306,9 @@ button {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      РАСХОДЫ
-     ========================= -->
+     ===================================================== -->
 
 <div class="report-section">
   РАСХОДЫ И ИЗЪЯТИЯ
@@ -1163,9 +1437,9 @@ button {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      ЗАКРЫТИЕ
-     ========================= -->
+     ===================================================== -->
 
 <div class="report-section">
   ЗАКРЫТИЕ СМЕНЫ
@@ -1208,9 +1482,9 @@ button {
 <script>
 
 
-/* =========================
-   ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
-   ========================= */
+/* =====================================================
+   ПОЛУЧЕНИЕ ЗНАЧЕНИЙ
+   ===================================================== */
 
 function val(id) {
 
@@ -1226,12 +1500,12 @@ function val(id) {
 
 function num(id) {
 
-  const value =
+  const number =
     parseFloat(val(id));
 
-  return isNaN(value)
+  return isNaN(number)
     ? 0
-    : value;
+    : number;
 
 }
 
@@ -1254,37 +1528,46 @@ function setText(id, value) {
 }
 
 
-/* =========================
+/* =====================================================
    ФОРМАТ ДАТЫ
-   ========================= */
+   ===================================================== */
 
 function formatDate(date) {
 
   if (!date) {
+
     return "—";
+
   }
+
 
   const parts =
     date.split("-");
 
+
   if (parts.length !== 3) {
+
     return date;
+
   }
 
+
   return (
+
     parts[2] +
     "." +
     parts[1] +
     "." +
     parts[0]
+
   );
 
 }
 
 
-/* =========================
+/* =====================================================
    РАСЧЁТ ИТОГОВ
-   ========================= */
+   ===================================================== */
 
 function calculate() {
 
@@ -1292,36 +1575,47 @@ function calculate() {
   /* Только наличные + безнал */
 
   const paymentTotal =
+
     num("cash") +
     num("card");
 
 
+  /* Все расходы */
+
   const expenseTotal =
+
     num("baristaExpense") +
+
     num("supplier1") +
+
     num("supplier2") +
+
     num("supplier3") +
+
     num("supplier4") +
+
     num("withdraw");
 
 
   document.getElementById(
     "paymentTotal"
   ).textContent =
+
     money(paymentTotal);
 
 
   document.getElementById(
     "expenseTotal"
   ).textContent =
+
     money(expenseTotal);
 
 }
 
 
-/* =========================
-   ОБНОВЛЕНИЕ ПРИ ВВОДЕ
-   ========================= */
+/* =====================================================
+   АВТОМАТИЧЕСКИЙ ПЕРЕСЧЁТ
+   ===================================================== */
 
 document
   .querySelectorAll("input")
@@ -1335,9 +1629,9 @@ document
   });
 
 
-/* =========================
-   СОЗДАНИЕ ОТЧЁТА
-   ========================= */
+/* =====================================================
+   СОЗДАНИЕ ГОТОВОГО ОТЧЁТА
+   ===================================================== */
 
 function createReport() {
 
@@ -1349,7 +1643,9 @@ function createReport() {
 
   setText(
     "rDate",
-    formatDate(val("date"))
+    formatDate(
+      val("date")
+    )
   );
 
 
@@ -1369,17 +1665,21 @@ function createReport() {
 
   setText(
     "rOpenCash",
-    money(num("openCash")) + " ₽"
+    money(
+      num("openCash")
+    ) + " ₽"
   );
 
 
-  /* =========================
+  /* ===================================================
      ОПЛАТЫ
-     ========================= */
+     =================================================== */
 
   setText(
     "rCash",
-    money(num("cash")) + " ₽"
+    money(
+      num("cash")
+    ) + " ₽"
   );
 
 
@@ -1391,7 +1691,9 @@ function createReport() {
 
   setText(
     "rCard",
-    money(num("card")) + " ₽"
+    money(
+      num("card")
+    ) + " ₽"
   );
 
 
@@ -1402,6 +1704,7 @@ function createReport() {
 
 
   const paymentTotal =
+
     num("cash") +
     num("card");
 
@@ -1412,13 +1715,15 @@ function createReport() {
   );
 
 
-  /* =========================
+  /* ===================================================
      РАСХОДЫ
-     ========================= */
+     =================================================== */
 
   setText(
     "rBaristaExpense",
-    money(num("baristaExpense")) + " ₽"
+    money(
+      num("baristaExpense")
+    ) + " ₽"
   );
 
 
@@ -1430,7 +1735,9 @@ function createReport() {
 
   setText(
     "rSupplier1",
-    money(num("supplier1")) + " ₽"
+    money(
+      num("supplier1")
+    ) + " ₽"
   );
 
 
@@ -1442,7 +1749,9 @@ function createReport() {
 
   setText(
     "rSupplier2",
-    money(num("supplier2")) + " ₽"
+    money(
+      num("supplier2")
+    ) + " ₽"
   );
 
 
@@ -1454,7 +1763,9 @@ function createReport() {
 
   setText(
     "rSupplier3",
-    money(num("supplier3")) + " ₽"
+    money(
+      num("supplier3")
+    ) + " ₽"
   );
 
 
@@ -1466,7 +1777,9 @@ function createReport() {
 
   setText(
     "rSupplier4",
-    money(num("supplier4")) + " ₽"
+    money(
+      num("supplier4")
+    ) + " ₽"
   );
 
 
@@ -1478,7 +1791,9 @@ function createReport() {
 
   setText(
     "rWithdraw",
-    money(num("withdraw")) + " ₽"
+    money(
+      num("withdraw")
+    ) + " ₽"
   );
 
 
@@ -1489,11 +1804,17 @@ function createReport() {
 
 
   const expenseTotal =
+
     num("baristaExpense") +
+
     num("supplier1") +
+
     num("supplier2") +
+
     num("supplier3") +
+
     num("supplier4") +
+
     num("withdraw");
 
 
@@ -1503,9 +1824,9 @@ function createReport() {
   );
 
 
-  /* =========================
+  /* ===================================================
      ЗАКРЫТИЕ
-     ========================= */
+     =================================================== */
 
   setText(
     "rCloseTime",
@@ -1515,15 +1836,17 @@ function createReport() {
 
   setText(
     "rCloseCash",
-    money(num("closeCash")) + " ₽"
+    money(
+      num("closeCash")
+    ) + " ₽"
   );
 
 }
 
 
-/* =========================
+/* =====================================================
    СОЗДАНИЕ JPEG
-   ========================= */
+   ===================================================== */
 
 async function makeJPEG() {
 
@@ -1536,9 +1859,13 @@ async function makeJPEG() {
 
 
   const canvas =
+
     await html2canvas(
+
       report,
+
       {
+
         scale: 2,
 
         backgroundColor: "#ffffff",
@@ -1546,7 +1873,9 @@ async function makeJPEG() {
         useCORS: true,
 
         logging: false
+
       }
+
     );
 
 
@@ -1573,9 +1902,9 @@ async function makeJPEG() {
 }
 
 
-/* =========================
-   СОХРАНЕНИЕ / ОТПРАВКА
-   ========================= */
+/* =====================================================
+   СОХРАНИТЬ / ОТПРАВИТЬ
+   ===================================================== */
 
 async function saveJPEG() {
 
@@ -1589,10 +1918,11 @@ async function saveJPEG() {
 
     const date =
       val("date") ||
-      "report";
+      "без_даты";
 
 
     const file =
+
       new File(
 
         [blob],
@@ -1602,13 +1932,17 @@ async function saveJPEG() {
         ".jpg",
 
         {
+
           type: "image/jpeg"
+
         }
 
       );
 
 
-    /* iPhone / Android */
+    /* -----------------------------------------------
+       iPhone / Android — меню «Поделиться»
+       ----------------------------------------------- */
 
     if (
 
@@ -1617,7 +1951,9 @@ async function saveJPEG() {
       navigator.canShare &&
 
       navigator.canShare({
+
         files: [file]
+
       })
 
     ) {
@@ -1638,7 +1974,9 @@ async function saveJPEG() {
     else {
 
 
-      /* Обычное скачивание */
+      /* ---------------------------------------------
+         Если Share API недоступен
+         --------------------------------------------- */
 
       const url =
         URL.createObjectURL(blob);
@@ -1648,10 +1986,12 @@ async function saveJPEG() {
         document.createElement("a");
 
 
-      a.href = url;
+      a.href =
+        url;
 
 
       a.download =
+
         "A5_Отчёт_" +
         date +
         ".jpg";
@@ -1667,12 +2007,16 @@ async function saveJPEG() {
 
 
       setTimeout(
-        () => {
-          URL.revokeObjectURL(url);
-        },
-        1000
-      );
 
+        () => {
+
+          URL.revokeObjectURL(url);
+
+        },
+
+        1000
+
+      );
 
     }
 
@@ -1686,53 +2030,17 @@ async function saveJPEG() {
 
 
     alert(
-      "JPEG создан. Если окно отправки не открылось, попробуйте ещё раз."
+      "Не удалось открыть меню отправки. Попробуйте нажать кнопку ещё раз."
     );
-
 
   }
 
 }
 
 
-/* =========================
-   АВТОМАТИЧЕСКАЯ ДАТА
-   ========================= */
-
-const today =
-  new Date();
-
-
-const yyyy =
-  today.getFullYear();
-
-
-const mm =
-  String(
-    today.getMonth() + 1
-  ).padStart(2, "0");
-
-
-const dd =
-  String(
-    today.getDate()
-  ).padStart(2, "0");
-
-
-document.getElementById(
-  "date"
-).value =
-
-  yyyy +
-  "-" +
-  mm +
-  "-" +
-  dd;
-
-
-/* =========================
-   ТЕКУЩЕЕ ВРЕМЯ
-   ========================= */
+/* =====================================================
+   ВРЕМЯ
+   ===================================================== */
 
 function setCurrentTime(id) {
 
@@ -1741,28 +2049,38 @@ function setCurrentTime(id) {
     new Date();
 
 
-  const hh =
+  const hours =
+
     String(
       now.getHours()
     ).padStart(2, "0");
 
 
-  const min =
+  const minutes =
+
     String(
       now.getMinutes()
     ).padStart(2, "0");
 
 
-  document.getElementById(
-    id
-  ).value =
+  document.getElementById(id).value =
 
-    hh +
+    hours +
     ":" +
-    min;
+    minutes;
 
 }
 
+
+/* =====================================================
+   ВАЖНО:
+   ДАТУ НЕ ЗАПОЛНЯЕМ АВТОМАТИЧЕСКИ
+   ===================================================== */
+
+document.getElementById("date").value = "";
+
+
+/* Время можно поставить автоматически */
 
 setCurrentTime("openTime");
 
