@@ -4135,7 +4135,41 @@ async function loadHistory(){
     }
 
 
+    const uniqueReports=[];
+    const seenReportSignatures=new Set();
+
     reports.forEach(
+      report=>{
+
+        const signature=JSON.stringify([
+          report.user_name??"",
+          report.report_date??report.date??"",
+          report.opening_time??"",
+          report.closing_time??"",
+          report.opening_cash??0,
+          report.cash??0,
+          report.card??0,
+          report.qr??0,
+          report.expense_barista??0,
+          report.expense_supplier??0,
+          report.expense_withdrawal??0,
+          report.actual_cash??0,
+          report.comment_barista??"",
+          report.report_image_url??""
+        ]);
+
+        if(!seenReportSignatures.has(signature)){
+
+          seenReportSignatures.add(signature);
+          uniqueReports.push(report);
+
+        }
+
+      }
+    );
+
+
+    uniqueReports.forEach(
       report=>{
 
         const item=
