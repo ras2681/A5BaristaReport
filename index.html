@@ -4141,21 +4141,23 @@ async function loadHistory(){
     reports.forEach(
       report=>{
 
+        // Сравниваем именно данные, которые видны в карточке истории.
+        // Не учитываем внутренний ID и ссылку на фото: они могут отличаться
+        // у двух копий одного и того же отчёта.
         const signature=JSON.stringify([
-          report.user_name??"",
-          report.report_date??report.date??"",
-          report.opening_time??"",
-          report.closing_time??"",
-          report.opening_cash??0,
-          report.cash??0,
-          report.card??0,
-          report.qr??0,
-          report.expense_barista??0,
-          report.expense_supplier??0,
-          report.expense_withdrawal??0,
-          report.actual_cash??0,
-          report.comment_barista??"",
-          report.report_image_url??""
+          String(report.user_name||"").trim().toLowerCase(),
+          formatDate(report.report_date||report.date||""),
+          String(report.opening_time||"").slice(0,5),
+          String(report.closing_time||"").slice(0,5),
+          Number(report.opening_cash||0),
+          Number(report.cash||0),
+          Number(report.card||0),
+          Number(report.qr||0),
+          Number(report.expense_barista||0),
+          Number(report.expense_supplier||0),
+          Number(report.expense_withdrawal||0),
+          Number(report.actual_cash||0),
+          String(report.comment_barista||"").trim()
         ]);
 
         if(!seenReportSignatures.has(signature)){
