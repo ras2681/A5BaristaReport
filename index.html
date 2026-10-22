@@ -1320,6 +1320,70 @@ input[type=number]{
 </div>
 
 
+<div class="section">
+  ПРИХОД
+</div>
+
+
+<table class="form-table">
+
+<thead>
+<tr>
+<th>Приход</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Внесение наличных</td>
+<td>
+<input
+  type="number"
+  id="incomingCash"
+  value=""
+  inputmode="decimal"
+>
+</td>
+<td>
+<input
+  type="text"
+  id="incomingCashComment"
+>
+</td>
+</tr>
+
+<tr>
+<td>Возврат</td>
+<td>
+<input
+  type="number"
+  id="incomingReturn"
+  value=""
+  inputmode="decimal"
+>
+</td>
+<td>
+<input
+  type="text"
+  id="incomingReturnComment"
+>
+</td>
+</tr>
+
+</tbody>
+</table>
+
+
+<div class="total">
+  ИТОГО ПРИХОД:
+  <span id="incomingTotal">0</span>
+  ₽
+</div>
+
+
 <div class="expected">
 
   ОЖИДАЕМЫЙ ОСТАТОК:
@@ -1792,6 +1856,46 @@ input[type=number]{
   <span id="rExpenseTotal"></span>
   ₽
 
+</div>
+
+
+<div class="report-section">
+  ПРИХОД
+</div>
+
+
+<table class="report-table report-expenses">
+
+<thead>
+<tr>
+<th>Приход</th>
+<th>Сумма</th>
+<th>Комментарий</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr id="rIncomingCashRow">
+<td>Внесение наличных</td>
+<td id="rIncomingCash"></td>
+<td id="rIncomingCashComment"></td>
+</tr>
+
+<tr id="rIncomingReturnRow">
+<td>Возврат</td>
+<td id="rIncomingReturn"></td>
+<td id="rIncomingReturnComment"></td>
+</tr>
+
+</tbody>
+</table>
+
+
+<div class="report-total">
+  ИТОГО ПРИХОД:
+  <span id="rIncomingTotal"></span>
+  ₽
 </div>
 
 
@@ -2993,12 +3097,26 @@ function calculate(){
   );
 
 
+  const incomingTotal=
+    num("incomingCash")+
+    num("incomingReturn");
+
+
+  setText(
+    "incomingTotal",
+    money(
+      incomingTotal
+    )
+  );
+
+
   setText(
     "expectedCash",
     money(
       num("openCash")+
       cash-
-      expenseTotal
+      expenseTotal+
+      incomingTotal
     )
   );
 
@@ -3099,6 +3217,29 @@ async function saveToSupabase(){
 
     }
   );
+
+
+  [
+    ["Внесение наличных","incomingCash","incomingCashComment"],
+    ["Возврат","incomingReturn","incomingReturnComment"]
+  ].forEach(item=>{
+
+    const amount=val(item[1]).trim();
+    const comment=val(item[2]).trim();
+
+    if(amount||comment){
+
+      let entry=item[0]+": "+money(num(item[1]))+" ₽";
+
+      if(comment){
+        entry+=" ("+comment+")";
+      }
+
+      comments.push(entry);
+
+    }
+
+  });
 
 
   return await callRPC(
@@ -3556,6 +3697,37 @@ function createReport(){
     "withdrawComment",
     "rWithdraw",
     "rWithdrawComment"
+  );
+
+
+  fillReportRow(
+    "rIncomingCashRow",
+    "incomingCash",
+    "incomingCashComment",
+    "rIncomingCash",
+    "rIncomingCashComment"
+  );
+
+
+  fillReportRow(
+    "rIncomingReturnRow",
+    "incomingReturn",
+    "incomingReturnComment",
+    "rIncomingReturn",
+    "rIncomingReturnComment"
+  );
+
+
+  const incomingTotal=
+    num("incomingCash")+
+    num("incomingReturn");
+
+
+  setText(
+    "rIncomingTotal",
+    money(
+      incomingTotal
+    )
   );
 
 
