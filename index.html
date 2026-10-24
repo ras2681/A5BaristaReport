@@ -900,6 +900,8 @@ input[type=number]{
 </h1>
 
 
+
+
 <label>
   Дата
 </label>
@@ -916,15 +918,26 @@ input[type=number]{
 </div>
 
 
-<label>
-  Время открытия
-</label>
-
-<input
-  type="time"
-  id="openTime"
-  value=""
->
+<div style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+  <div>
+    <label for="openTime">Время открытия</label>
+    <input type="time" id="openTime" value="">
+  </div>
+  <div id="substituteButtonSlot" class="hidden" style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;max-width:100%"><button type="button" id="substituteOpenButtonInline" onclick="toggleSubstitutePicker()" style="width:auto;padding:8px 12px;font-size:14px;white-space:nowrap">Выбрать баристу</button>
+  <div id="substitutePicker" class="section hidden" style="margin-top:8px">
+    <label for="substituteChoice">Кто вышел на смену?</label>
+    <select id="substituteChoice" onchange="chooseSubstituteBarista()">
+      <option value="">Выберите зарегистрированную бариста или введите имя</option>
+      <option value="__custom__">Ввести своё имя</option>
+    </select>
+    <div id="substituteNameWrap" class="hidden" style="margin-top:10px">
+      <label for="substituteBaristaInput">Имя бариста</label>
+      <input type="text" id="substituteBaristaInput" maxlength="80" placeholder="Введите имя и фамилию" oninput="updateSubstituteBaristaName()">
+    </div>
+    <div class="message">Имя выбранной бариста будет указано в отчёте. Учётная запись для разовой подмены не создаётся.</div>
+  </div>
+</div>
+</div>
 
 
 <label>
@@ -1317,70 +1330,6 @@ input[type=number]{
   </span>
   ₽
 
-</div>
-
-
-<div class="section">
-  ПРИХОД
-</div>
-
-
-<table class="form-table">
-
-<thead>
-<tr>
-<th>Приход</th>
-<th>Сумма</th>
-<th>Комментарий</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>Внесение наличных</td>
-<td>
-<input
-  type="number"
-  id="incomingCash"
-  value=""
-  inputmode="decimal"
->
-</td>
-<td>
-<input
-  type="text"
-  id="incomingCashComment"
->
-</td>
-</tr>
-
-<tr>
-<td>Возврат</td>
-<td>
-<input
-  type="number"
-  id="incomingReturn"
-  value=""
-  inputmode="decimal"
->
-</td>
-<td>
-<input
-  type="text"
-  id="incomingReturnComment"
->
-</td>
-</tr>
-
-</tbody>
-</table>
-
-
-<div class="total">
-  ИТОГО ПРИХОД:
-  <span id="incomingTotal">0</span>
-  ₽
 </div>
 
 
@@ -1860,46 +1809,6 @@ input[type=number]{
 
 
 <div class="report-section">
-  ПРИХОД
-</div>
-
-
-<table class="report-table report-expenses">
-
-<thead>
-<tr>
-<th>Приход</th>
-<th>Сумма</th>
-<th>Комментарий</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr id="rIncomingCashRow">
-<td>Внесение наличных</td>
-<td id="rIncomingCash"></td>
-<td id="rIncomingCashComment"></td>
-</tr>
-
-<tr id="rIncomingReturnRow">
-<td>Возврат</td>
-<td id="rIncomingReturn"></td>
-<td id="rIncomingReturnComment"></td>
-</tr>
-
-</tbody>
-</table>
-
-
-<div class="report-total">
-  ИТОГО ПРИХОД:
-  <span id="rIncomingTotal"></span>
-  ₽
-</div>
-
-
-<div class="report-section">
   ОСТАТОК
 </div>
 
@@ -1955,7 +1864,8 @@ pinValue="",
 currentUser=null,
 currentPin="",
 loginInProgress=false,
-deviceCheckTimer=null;
+deviceCheckTimer=null,
+substituteBaristaName="";
 
 
 function getDeviceToken(){
@@ -2164,6 +2074,7 @@ function deviceAccessDenied(){
 
   currentUser=null;
   currentPin="";
+  resetSubstituteBarista();
   selectedUser=null;
   pinValue="";
   loginInProgress=false;
@@ -2922,6 +2833,8 @@ async function login(){
         .classList
         .remove("hidden");
 
+      document.getElementById("substituteButtonSlot").classList.remove("hidden");
+
     }else{
 
       document
@@ -2929,8 +2842,11 @@ async function login(){
         .classList
         .add("hidden");
 
+      document.getElementById("substituteButtonSlot").classList.add("hidden");
+
     }
 
+    resetSubstituteBarista();
 
     setToday();
 
@@ -3044,6 +2960,111 @@ function logout(){
 }
 
 
+function toggleSubstitutePicker(){
+  if(!currentUser || currentUser.role!=="admin") return;
+  const picker=document.getElementById("substitutePicker");
+  const opening=picker.classList.contains("hidden");
+  picker.classList.toggle("hidden",!opening);
+  if(opening) populateSubstituteChoices();
+}
+
+function populateSubstituteChoices(){
+  const select=document.getElementById("substituteChoice");
+  if(!select) return;
+  const current=select.value;
+  select.innerHTML="";
+  const placeholder=document.createElement("option");
+  placeholder.value="";
+  placeholder.textContent="Выберите зарегистрированную бариста или введите имя";
+  select.appendChild(placeholder);
+  loginUsers.filter(u=>u.role==="barista").forEach(user=>{
+    const option=document.createElement("option");
+    option.value="user:"+user.id;
+    option.textContent=user.name;
+    option.dataset.name=user.name;
+    select.appendChild(option);
+  });
+  const custom=document.createElement("option");
+  custom.value="__custom__";
+  custom.textContent="Ввести своё имя";
+  select.appendChild(custom);
+  if(current && Array.from(select.options).some(o=>o.value===current)) select.value=current;
+}
+
+function chooseSubstituteBarista(){
+  const select=document.getElementById("substituteChoice");
+  const value=select ? select.value : "";
+  const wrap=document.getElementById("substituteNameWrap");
+  const input=document.getElementById("substituteBaristaInput");
+  const checkbox=document.getElementById("useSubstituteBarista");
+  if(checkbox) checkbox.checked=!!value;
+  if(value.startsWith("user:")){
+    const option=select.options[select.selectedIndex];
+    substituteBaristaName=option?.dataset.name || option?.textContent || "";
+    if(input) input.value=substituteBaristaName;
+    if(wrap) wrap.classList.add("hidden");
+  }else if(value==="__custom__"){
+    substituteBaristaName="";
+    if(input) input.value="";
+    if(wrap) wrap.classList.remove("hidden");
+    input?.focus();
+  }else{
+    substituteBaristaName="";
+    if(input) input.value="";
+    if(wrap) wrap.classList.add("hidden");
+  }
+  updateFormBaristaTitle();
+  createReport();
+}
+
+function toggleSubstituteBarista(){
+  chooseSubstituteBarista();
+}
+
+function updateSubstituteBaristaName(){
+
+  const select=document.getElementById("substituteChoice");
+  if(select && select.value!=="__custom__") select.value="__custom__";
+  const checkbox=document.getElementById("useSubstituteBarista");
+  if(checkbox) checkbox.checked=true;
+  substituteBaristaName=val("substituteBaristaInput").trim();
+  updateFormBaristaTitle();
+  createReport();
+}
+
+function updateFormBaristaTitle(){
+
+  if(!currentUser) return;
+  const isSubstitute=currentUser.role==="admin" && !!substituteBaristaName.trim();
+  setText("formTitle",isSubstitute
+    ?("ОТЧЁТ — "+(substituteBaristaName||"РАЗОВАЯ ПОДМЕНА"))
+    :("ОТЧЁТ — "+currentUser.name));
+}
+
+function resetSubstituteBarista(){
+
+  substituteBaristaName="";
+  const checkbox=document.getElementById("useSubstituteBarista");
+  const input=document.getElementById("substituteBaristaInput");
+  const wrap=document.getElementById("substituteNameWrap");
+  const select=document.getElementById("substituteChoice");
+  const picker=document.getElementById("substitutePicker");
+  if(checkbox) checkbox.checked=false;
+  if(input) input.value="";
+  if(select) select.value="";
+  if(wrap) wrap.classList.add("hidden");
+  if(picker) picker.classList.add("hidden");
+  updateFormBaristaTitle();
+}
+
+function getReportBaristaName(){
+
+  if(currentUser && currentUser.role==="admin" && document.getElementById("substituteChoice")?.value){
+    return substituteBaristaName.trim();
+  }
+  return currentUser ? currentUser.name : "";
+}
+
 function calculate(){
 
   const cash=
@@ -3097,26 +3118,12 @@ function calculate(){
   );
 
 
-  const incomingTotal=
-    num("incomingCash")+
-    num("incomingReturn");
-
-
-  setText(
-    "incomingTotal",
-    money(
-      incomingTotal
-    )
-  );
-
-
   setText(
     "expectedCash",
     money(
       num("openCash")+
       cash-
-      expenseTotal+
-      incomingTotal
+      expenseTotal
     )
   );
 
@@ -3184,6 +3191,13 @@ async function saveToSupabase(){
 
   const comments=[];
 
+  if(currentUser.role==="admin" && document.getElementById("substituteChoice")?.value && !substituteBaristaName.trim()){
+    throw new Error("Введите имя бариста на подмене");
+  }
+
+  if(currentUser.role==="admin" && document.getElementById("substituteChoice")?.value){
+    comments.push("[[A5_SUBSTITUTE:"+substituteBaristaName.trim().replace(/[\r\n]/g," ")+"]]");
+  }
 
   [
     ["Наличные","cashComment"],
@@ -3217,29 +3231,6 @@ async function saveToSupabase(){
 
     }
   );
-
-
-  [
-    ["Внесение наличных","incomingCash","incomingCashComment"],
-    ["Возврат","incomingReturn","incomingReturnComment"]
-  ].forEach(item=>{
-
-    const amount=val(item[1]).trim();
-    const comment=val(item[2]).trim();
-
-    if(amount||comment){
-
-      let entry=item[0]+": "+money(num(item[1]))+" ₽";
-
-      if(comment){
-        entry+=" ("+comment+")";
-      }
-
-      comments.push(entry);
-
-    }
-
-  });
 
 
   return await callRPC(
@@ -3522,9 +3513,10 @@ function createReport(){
 
   setText(
     "rBarista",
-    currentUser
-      ?currentUser.name
-      :""
+    getReportBaristaName() +
+    (currentUser && currentUser.role==="admin" && document.getElementById("useSubstituteBarista")?.checked
+      ? " (разовая подмена)"
+      : "")
   );
 
 
@@ -3697,37 +3689,6 @@ function createReport(){
     "withdrawComment",
     "rWithdraw",
     "rWithdrawComment"
-  );
-
-
-  fillReportRow(
-    "rIncomingCashRow",
-    "incomingCash",
-    "incomingCashComment",
-    "rIncomingCash",
-    "rIncomingCashComment"
-  );
-
-
-  fillReportRow(
-    "rIncomingReturnRow",
-    "incomingReturn",
-    "incomingReturnComment",
-    "rIncomingReturn",
-    "rIncomingReturnComment"
-  );
-
-
-  const incomingTotal=
-    num("incomingCash")+
-    num("incomingReturn");
-
-
-  setText(
-    "rIncomingTotal",
-    money(
-      incomingTotal
-    )
   );
 
 
@@ -4316,8 +4277,12 @@ async function loadHistory(){
         // Сравниваем именно данные, которые видны в карточке истории.
         // Не учитываем внутренний ID и ссылку на фото: они могут отличаться
         // у двух копий одного и того же отчёта.
+        const substituteMatch=String(report.comment_barista||"").match(/\[\[A5_SUBSTITUTE:([\s\S]*?)\]\]/);
+        const displayedBarista=substituteMatch ? substituteMatch[1].trim()+" (разовая подмена)" : (report.user_name||"");
+        report._a5DisplayedBarista=displayedBarista;
+
         const signature=JSON.stringify([
-          String(report.user_name||"").trim().toLowerCase(),
+          String(displayedBarista).trim().toLowerCase(),
           formatDate(report.report_date||report.date||""),
           String(report.opening_time||"").slice(0,5),
           String(report.closing_time||"").slice(0,5),
@@ -4365,14 +4330,14 @@ async function loadHistory(){
         header.className=
           "history-barista-header "+
           getBaristaColorClass(
-            report.user_name
+            report._a5DisplayedBarista || report.user_name
           );
 
 
         header.textContent=
           "БАРИСТА — "+
           (
-            report.user_name||
+            report._a5DisplayedBarista || report.user_name ||
             "Не указан"
           );
 
@@ -4654,7 +4619,7 @@ async function loadHistory(){
           comment.innerHTML=
             "<strong>Комментарий:</strong> "+
             escapeHtml(
-              report.comment_barista
+              String(report.comment_barista).replace(/\[\[A5_SUBSTITUTE:[\s\S]*?\]\]\s*\|?\s*/g,"").trim()
             );
 
 
