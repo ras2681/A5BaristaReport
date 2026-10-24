@@ -1435,9 +1435,16 @@ input[type=number]{
 
 <button
   class="main-button"
+  onclick="saveReportOnly()"
+>
+  СОХРАНИТЬ ОТЧЁТ
+</button>
+
+<button
+  class="main-button dark-button"
   onclick="saveReportAndJPEG()"
 >
-  СОХРАНИТЬ И ОТПРАВИТЬ JPEG
+  ПОДЕЛИТЬСЯ ОТЧЁТОМ JPEG
 </button>
 
 
@@ -3949,6 +3956,40 @@ async function makeJPEG(){
 }
 
 
+async function saveReportOnly(){
+
+  const message=
+    document.getElementById(
+      "saveMessage"
+    );
+
+  message.className="message";
+  message.textContent="Сохранение отчёта...";
+
+  try{
+
+    const reportId=await saveToSupabase();
+
+    if(!reportId){
+      throw new Error(
+        "Отчёт сохранён, но не получен его ID"
+      );
+    }
+
+    message.className="message success";
+    message.textContent="Отчёт сохранён. Отправка не выполнялась.";
+
+  }catch(error){
+
+    console.error(error);
+    message.className="message error";
+    message.textContent=error.message||"Ошибка сохранения";
+
+  }
+
+}
+
+
 async function saveReportAndJPEG(){
 
   const message=
@@ -4098,8 +4139,13 @@ async function saveReportAndJPEG(){
 
     console.error(error);
 
-    message.className=
-      "message error";
+    if(error && (error.name==="AbortError" || /cancel|abort/i.test(error.message||""))){
+      message.className="message success";
+      message.textContent="Отчёт сохранён. Отправка отменена.";
+      return;
+    }
+
+    message.className="message error";
 
     message.textContent=
       error.message||
