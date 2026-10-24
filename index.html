@@ -2942,6 +2942,14 @@ async function login(){
 
     }
 
+    // Кнопка разовой подмены доступна только администратору.
+    const substituteSlot = document.getElementById("substituteButtonSlot");
+    if(substituteSlot){
+      substituteSlot.classList.toggle("hidden", currentUser.role !== "admin");
+    }
+    if(typeof updateFormBaristaTitle === "function"){
+      updateFormBaristaTitle();
+    }
 
     setToday();
 
