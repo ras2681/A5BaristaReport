@@ -4494,19 +4494,20 @@ async function loadHistory(){
           );
 
 
+        const substituteMatch=String(report.comment_barista||"").match(/\[\[A5_SUBSTITUTE:([^\]]+)\]\]/);
+        const displayedBarista=substituteMatch
+          ? substituteMatch[1].trim()+" (разовая подмена)"
+          : (report.user_name||"Не указан");
+
         header.className=
           "history-barista-header "+
           getBaristaColorClass(
-            report.user_name
+            displayedBarista
           );
 
 
         header.textContent=
-          "БАРИСТА — "+
-          (
-            report.user_name||
-            "Не указан"
-          );
+          "БАРИСТА — "+displayedBarista;
 
 
         item.appendChild(
@@ -4783,16 +4784,18 @@ async function loadHistory(){
             "history-comment";
 
 
-          comment.innerHTML=
-            "<strong>Комментарий:</strong> "+
-            escapeHtml(
-              report.comment_barista
-            );
+          const cleanComment=String(report.comment_barista||"")
+            .replace(/\[\[A5_SUBSTITUTE:[^\]]+\]\]\s*\|?\s*/g,"")
+            .replace(/\s*\|\s*$/g,"")
+            .trim();
 
+          if(cleanComment){
+            comment.innerHTML=
+              "<strong>Комментарий:</strong> "+
+              escapeHtml(cleanComment);
+            item.appendChild(comment);
+          }
 
-          item.appendChild(
-            comment
-          );
 
         }
 
@@ -4854,6 +4857,17 @@ async function loadHistory(){
         }
 
 
+        if(currentUser && currentUser.role==="admin"){
+          const deleteButton=document.createElement("button");
+          deleteButton.className="main-button dark-button";
+          deleteButton.style.marginTop="12px";
+          deleteButton.style.borderColor="#a33";
+          deleteButton.style.color="#ff8a8a";
+          deleteButton.textContent="Удалить отчёт";
+          deleteButton.onclick=()=>deleteShiftReport(report,deleteButton);
+          item.appendChild(deleteButton);
+        }
+
         list.appendChild(
           item
         );
@@ -4873,6 +4887,30 @@ async function loadHistory(){
 
   }
 
+}
+
+
+async function deleteShiftReport(report,button){
+  if(!currentUser||currentUser.role!=="admin") return;
+  const reportId=report.id||report.report_id||report.shift_report_id;
+  if(!reportId){
+    alert("Не удалось определить ID отчёта. Удаление требует ID отчёта из базы данных.");
+    return;
+  }
+  if(!confirm("Удалить отчёт бариста «"+(report.user_name||"Не указан")+"» за "+formatDate(report.report_date||report.date||"")+"?\n\nЭто действие нельзя отменить.")) return;
+  const oldText=button.textContent;
+  button.disabled=true;
+  button.textContent="Удаление...";
+  try{
+    await callRPC("delete_shift_report_admin",{p_pin:currentPin,p_report_id:reportId});
+    alert("Отчёт удалён.");
+    await loadHistory();
+  }catch(error){
+    console.error(error);
+    alert("Не удалось удалить отчёт. Возможно, в Supabase ещё не создана функция delete_shift_report_admin. Ошибка: "+(error.message||error));
+    button.disabled=false;
+    button.textContent=oldText;
+  }
 }
 
 
