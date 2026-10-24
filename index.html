@@ -3317,16 +3317,16 @@ async function saveToSupabase(){
   }
 
   [
-    ["Наличные","cashComment"],
-    ["Безнал","cardComment"],
-    ["Бариста","baristaComment1"],
-    ["Бариста","baristaComment2"],
-    ["Бариста","baristaComment3"],
-    ["Поставщик","supplierComment1"],
-    ["Поставщик","supplierComment2"],
-    ["Поставщик","supplierComment3"],
-    ["Поставщик","supplierComment4"],
-    ["Изъятие","withdrawComment"]
+    ["Наличные","cashComment","cash"],
+    ["Безнал","cardComment","card"],
+    ["Бариста","baristaComment1","baristaExpense1"],
+    ["Бариста","baristaComment2","baristaExpense2"],
+    ["Бариста","baristaComment3","baristaExpense3"],
+    ["Поставщик","supplierComment1","supplier1"],
+    ["Поставщик","supplierComment2","supplier2"],
+    ["Поставщик","supplierComment3","supplier3"],
+    ["Поставщик","supplierComment4","supplier4"],
+    ["Изъятие","withdrawComment","withdraw"]
   ]
   .forEach(
     item=>{
@@ -3338,10 +3338,14 @@ async function saveToSupabase(){
 
       if(text){
 
+        const amount = num(item[2]);
         comments.push(
           item[0]+
           ": "+
-          text
+          text+
+          " — "+
+          money(amount)+
+          " ₽"
         );
 
       }
@@ -4790,9 +4794,15 @@ async function loadHistory(){
             .trim();
 
           if(cleanComment){
+            const commentLines=cleanComment
+              .split(/\s*\|\s*/)
+              .map(line=>line.trim())
+              .filter(Boolean)
+              .map(line=>escapeHtml(line));
+
             comment.innerHTML=
-              "<strong>Комментарий:</strong> "+
-              escapeHtml(cleanComment);
+              "<strong>Комментарий:</strong><br>"+
+              commentLines.join("<br>");
             item.appendChild(comment);
           }
 
