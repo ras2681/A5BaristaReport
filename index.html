@@ -1435,16 +1435,9 @@ input[type=number]{
 
 <button
   class="main-button"
-  onclick="saveReportOnly()"
->
-  СОХРАНИТЬ ОТЧЁТ
-</button>
-
-<button
-  class="main-button dark-button"
   onclick="saveReportAndJPEG()"
 >
-  ПОДЕЛИТЬСЯ ОТЧЁТОМ JPEG
+  СОХРАНИТЬ И ОТПРАВИТЬ ОТЧЁТ
 </button>
 
 
@@ -3349,10 +3342,9 @@ async function saveToSupabase(){
         comments.push(
           item[0]+
           ": "+
-          text+
-          " — "+
           money(amount)+
-          " ₽"
+          " ₽ • "+
+          text
         );
 
       }
@@ -3374,7 +3366,7 @@ async function saveToSupabase(){
       let entry=item[0]+": "+money(num(item[1]))+" ₽";
 
       if(comment){
-        entry+=" ("+comment+")";
+        entry+=" • "+comment;
       }
 
       comments.push(entry);
@@ -3427,7 +3419,7 @@ async function saveToSupabase(){
         num("closeCash"),
 
       p_comment:
-        comments.join(" | ")
+        comments.join("\n")
 
     }
   );
@@ -3956,40 +3948,6 @@ async function makeJPEG(){
 }
 
 
-async function saveReportOnly(){
-
-  const message=
-    document.getElementById(
-      "saveMessage"
-    );
-
-  message.className="message";
-  message.textContent="Сохранение отчёта...";
-
-  try{
-
-    const reportId=await saveToSupabase();
-
-    if(!reportId){
-      throw new Error(
-        "Отчёт сохранён, но не получен его ID"
-      );
-    }
-
-    message.className="message success";
-    message.textContent="Отчёт сохранён. Отправка не выполнялась.";
-
-  }catch(error){
-
-    console.error(error);
-    message.className="message error";
-    message.textContent=error.message||"Ошибка сохранения";
-
-  }
-
-}
-
-
 async function saveReportAndJPEG(){
 
   const message=
@@ -4137,15 +4095,31 @@ async function saveReportAndJPEG(){
 
   }catch(error){
 
-    console.error(error);
+    if(
+      error&&
+      (
+        error.name==="AbortError"||
+        /cancel|abort|отмен/i.test(
+          error.message||""
+        )
+      )
+    ){
 
-    if(error && (error.name==="AbortError" || /cancel|abort/i.test(error.message||""))){
-      message.className="message success";
-      message.textContent="Отчёт сохранён. Отправка отменена.";
+      message.className=
+        "message success";
+
+      message.textContent=
+        "Отчёт сохранён. Отправка отменена.";
+
       return;
+
     }
 
-    message.className="message error";
+
+    console.error(error);
+
+    message.className=
+      "message error";
 
     message.textContent=
       error.message||
@@ -4841,7 +4815,7 @@ async function loadHistory(){
 
           if(cleanComment){
             const commentLines=cleanComment
-              .split(/\s*\|\s*/)
+              .split(/\s*(?:\||\n)\s*/)
               .map(line=>line.trim())
               .filter(Boolean)
               .map(line=>escapeHtml(line));
