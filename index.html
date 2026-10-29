@@ -695,7 +695,7 @@ input[type=number]{
 .report-expenses th:nth-child(2),
 .report-expenses td:nth-child(2){
   width:22%;
-  text-align:right
+  text-align:center
 }
 
 .report-payments th:nth-child(3),
@@ -1314,32 +1314,19 @@ input[type=number]{
 </tr>
 
 <tr>
-
-<td>
-  Возврат наличных клиенту
-</td>
-
-<td>
-
-<input
-  type="number"
-  id="customerCashRefund"
-  value=""
-  inputmode="decimal"
->
-
-</td>
-
-<td>
-
-<input
-  type="text"
-  id="customerCashRefundComment"
-  placeholder="Отмена чека"
->
-
-</td>
-
+<td>Возврат наличных клиенту</td>
+<td><input type="number" id="customerCashRefund1" value="" inputmode="decimal"></td>
+<td><input type="text" id="customerCashRefundComment1" value="Отмена покупки"></td>
+</tr>
+<tr>
+<td>Возврат наличных клиенту</td>
+<td><input type="number" id="customerCashRefund2" value="" inputmode="decimal"></td>
+<td><input type="text" id="customerCashRefundComment2" value="Отмена покупки"></td>
+</tr>
+<tr>
+<td>Возврат наличных клиенту</td>
+<td><input type="number" id="customerCashRefund3" value="" inputmode="decimal"></td>
+<td><input type="text" id="customerCashRefundComment3" value="Отмена покупки"></td>
 </tr>
 
 
@@ -1883,16 +1870,20 @@ input[type=number]{
 
 </tr>
 
-<tr id="rCustomerCashRefundRow">
-
-<td>
-  Возврат наличных клиенту
-</td>
-
-<td id="rCustomerCashRefund"></td>
-
-<td id="rCustomerCashRefundComment"></td>
-
+<tr id="rCustomerCashRefundRow1">
+<td>Возврат наличных клиенту</td>
+<td id="rCustomerCashRefund1"></td>
+<td id="rCustomerCashRefundComment1"></td>
+</tr>
+<tr id="rCustomerCashRefundRow2">
+<td>Возврат наличных клиенту</td>
+<td id="rCustomerCashRefund2"></td>
+<td id="rCustomerCashRefundComment2"></td>
+</tr>
+<tr id="rCustomerCashRefundRow3">
+<td>Возврат наличных клиенту</td>
+<td id="rCustomerCashRefund3"></td>
+<td id="rCustomerCashRefundComment3"></td>
 </tr>
 
 
@@ -3249,7 +3240,9 @@ function calculate(){
     num("withdraw");
 
   const customerCashRefund=
-    num("customerCashRefund");
+    num("customerCashRefund1")+
+    num("customerCashRefund2")+
+    num("customerCashRefund3");
 
 
   const expenseTotal=
@@ -3351,9 +3344,6 @@ async function saveToSupabase(){
   const withdrawal=
     num("withdraw");
 
-  const customerCashRefund=
-    num("customerCashRefund");
-
 
   const comments=[];
 
@@ -3375,7 +3365,9 @@ async function saveToSupabase(){
     ["Поставщик","supplierComment3","supplier3"],
     ["Поставщик","supplierComment4","supplier4"],
     ["Изъятие","withdrawComment","withdraw"],
-    ["Возврат наличных клиенту","customerCashRefundComment","customerCashRefund"]
+    ["Возврат наличных клиенту","customerCashRefundComment1","customerCashRefund1"],
+    ["Возврат наличных клиенту","customerCashRefundComment2","customerCashRefund2"],
+    ["Возврат наличных клиенту","customerCashRefundComment3","customerCashRefund3"]
   ]
   .forEach(
     item=>{
@@ -3385,9 +3377,14 @@ async function saveToSupabase(){
           item[1]
         ).trim();
 
+      const amount = num(item[2]);
+
+      if(item[0]==="Возврат наличных клиенту" && amount<=0){
+        return;
+      }
+
       if(text){
 
-        const amount = num(item[2]);
         comments.push(
           item[0]+
           ": "+
@@ -3459,7 +3456,9 @@ async function saveToSupabase(){
 
       p_expense_withdrawal:
         withdrawal+
-        customerCashRefund,
+        num("customerCashRefund1")+
+        num("customerCashRefund2")+
+        num("customerCashRefund3"),
 
       p_closing_time:
         val("closeTime")||
@@ -3657,6 +3656,13 @@ function fillReportRow(
       commentId
     ).trim();
 
+  if(
+    rowId.startsWith("rCustomerCashRefundRow") &&
+    (!amount || num(amountId)<=0)
+  ){
+    row.style.display="none";
+    return;
+  }
 
   if(
     !amount&&
@@ -3884,12 +3890,29 @@ function createReport(){
     "rWithdrawComment"
   );
 
+
   fillReportRow(
-    "rCustomerCashRefundRow",
-    "customerCashRefund",
-    "customerCashRefundComment",
-    "rCustomerCashRefund",
-    "rCustomerCashRefundComment"
+    "rCustomerCashRefundRow1",
+    "customerCashRefund1",
+    "customerCashRefundComment1",
+    "rCustomerCashRefund1",
+    "rCustomerCashRefundComment1"
+  );
+
+  fillReportRow(
+    "rCustomerCashRefundRow2",
+    "customerCashRefund2",
+    "customerCashRefundComment2",
+    "rCustomerCashRefund2",
+    "rCustomerCashRefundComment2"
+  );
+
+  fillReportRow(
+    "rCustomerCashRefundRow3",
+    "customerCashRefund3",
+    "customerCashRefundComment3",
+    "rCustomerCashRefund3",
+    "rCustomerCashRefundComment3"
   );
 
 
@@ -3931,9 +3954,11 @@ function createReport(){
     num("supplier1")+
     num("supplier2")+
     num("supplier3")+
-    num("supplier4")+
-    num("withdraw")+
-    num("customerCashRefund");
+      num("supplier4")+
+      num("withdraw")+
+      num("customerCashRefund1")+
+      num("customerCashRefund2")+
+      num("customerCashRefund3");
 
 
   setText(
