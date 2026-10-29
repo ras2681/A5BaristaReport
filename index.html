@@ -4032,187 +4032,81 @@ async function makeJPEG(){
 }
 
 
-async function saveReportAndJPEG(){
+let lastReportJPEGBlob=null;
+let lastReportJPEGUrl=null;
 
-  const message=
-    document.getElementById(
-      "saveMessage"
-    );
-
-
-  message.className=
-    "message";
-
-  message.textContent=
-    "Сохранение отчёта...";
-
-
-  try{
-
-    const reportId=
-      await saveToSupabase();
-
-
-    if(!reportId){
-
-      throw new Error(
-        "Отчёт сохранён, но не получен его ID"
-      );
-
-    }
-
-
-    const blob=
-      await makeJPEG();
-
-
-    if(!blob){
-
-      throw new Error(
-        "Не удалось создать JPEG"
-      );
-
-    }
-
-
-    message.textContent=
-      "Загрузка фото отчёта...";
-
-
-    const imagePath=
-      await uploadReportImage(
-        reportId,
-        blob
-      );
-
-
-    await saveReportImagePath(
-      reportId,
-      imagePath
-    );
-
-
-    const file=
-      new File(
-        [blob],
-        "A5_Отчёт_смены.jpg",
-        {
-          type:
-            "image/jpeg"
-        }
-      );
-
-
-    if(
-      navigator.canShare&&
-      navigator.canShare({
-        files:[file]
-      })&&
-      navigator.share
-    ){
-
-      await navigator.share(
-        {
-          files:[file],
-          title:
-            "Отчёт смены A5"
-        }
-      );
-
-    }else if(
-      navigator.share
-    ){
-
-      await navigator.share(
-        {
-          title:
-            "Отчёт смены A5",
-
-          text:
-            "Отчёт смены бариста A5"
-        }
-      );
-
-    }else{
-
-      const url=
-        URL.createObjectURL(
-          blob
-        );
-
-
-      const link=
-        document.createElement(
-          "a"
-        );
-
-
-      link.href=url;
-
-      link.download=
-        file.name;
-
-
-      document.body.appendChild(
-        link
-      );
-
-
-      link.click();
-
-      link.remove();
-
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    }
-
-
-    message.className=
-      "message success";
-
-    message.textContent=
-      "Отчёт сохранён";
-
-
-  }catch(error){
-
-    if(
-      error&&
-      (
-        error.name==="AbortError"||
-        /cancel|abort|отмен/i.test(
-          error.message||""
-        )
-      )
-    ){
-
-      message.className=
-        "message success";
-
-      message.textContent=
-        "Отчёт сохранён. Отправка отменена.";
-
-      return;
-
-    }
-
-
-    console.error(error);
-
-    message.className=
-      "message error";
-
-    message.textContent=
-      error.message||
-      "Ошибка сохранения";
-
+function showReportShareOptions(blob){
+  const message=document.getElementById("saveMessage");
+  if(lastReportJPEGUrl){
+    try{ URL.revokeObjectURL(lastReportJPEGUrl); }catch(e){}
   }
-
+  lastReportJPEGBlob=blob;
+  lastReportJPEGUrl=URL.createObjectURL(blob);
+  message.className="message success";
+  message.innerHTML=
+    '<div style="font-weight:600;margin-bottom:10px">Отчёт сохранён. Выберите действие:</div>'+ 
+    '<button type="button" class="main-button" id="a5DownloadJPEG" style="margin:6px 0">СКАЧАТЬ JPEG</button>'+ 
+    '<button type="button" class="main-button dark-button" id="a5ShareJPEG" style="margin:6px 0">ПОДЕЛИТЬСЯ JPEG</button>'+ 
+    '<div style="font-size:13px;color:#aaa;margin-top:8px">Если меню отправки не поддерживается устройством, скачайте JPEG и отправьте его из галереи или приложения «Файлы».</div>';
+  document.getElementById("a5DownloadJPEG").onclick=()=>{
+    const link=document.createElement("a");
+    link.href=lastReportJPEGUrl;
+    link.download="A5_Отчёт_смены.jpg";
+    link.style.display="none";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+  document.getElementById("a5ShareJPEG").onclick=async()=>{
+    const shareButton=document.getElementById("a5ShareJPEG");
+    shareButton.disabled=true;
+    try{
+      if(!navigator.share){
+        message.insertAdjacentHTML("beforeend",'<div style="margin-top:8px;color:#ffd27a">На этом устройстве браузер не поддерживает системное меню отправки. Нажмите «Скачать JPEG» и отправьте файл вручную.</div>');
+        return;
+      }
+      const file=new File([lastReportJPEGBlob],"A5_Отчёт_смены.jpg",{type:"image/jpeg"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:"Отчёт смены A5"});
+      }else{
+        message.insertAdjacentHTML("beforeend",'<div style="margin-top:8px;color:#ffd27a">Этот браузер не позволяет передавать JPEG через меню отправки. Нажмите «Скачать JPEG» и отправьте файл вручную.</div>');
+      }
+    }catch(error){
+      if(!error || error.name!=="AbortError"){
+        console.error("Не удалось открыть меню отправки JPEG:",error);
+        message.insertAdjacentHTML("beforeend",'<div style="margin-top:8px;color:#ffd27a">Не удалось открыть меню отправки. Скачайте JPEG и отправьте его вручную.</div>');
+      }
+    }finally{
+      const button=document.getElementById("a5ShareJPEG");
+      if(button) button.disabled=false;
+    }
+  };
 }
 
+async function saveReportAndJPEG(){
+  const message=document.getElementById("saveMessage");
+  message.className="message";
+  message.textContent="Сохранение отчёта...";
+  try{
+    const reportId=await saveToSupabase();
+    if(!reportId) throw new Error("Отчёт сохранён, но не получен его ID");
+
+    const blob=await makeJPEG();
+    if(!blob) throw new Error("Не удалось создать JPEG");
+
+    message.textContent="Загрузка фото отчёта...";
+    const imagePath=await uploadReportImage(reportId,blob);
+    await saveReportImagePath(reportId,imagePath);
+
+    // Показываем кнопки после всех асинхронных операций. Так меню отправки
+    // запускается непосредственно нажатием пользователя и работает на разных устройствах.
+    showReportShareOptions(blob);
+  }catch(error){
+    console.error(error);
+    message.className="message error";
+    message.textContent=error.message||"Ошибка сохранения";
+  }
+}
 
 async function getReportImageUrl(
   imagePath
