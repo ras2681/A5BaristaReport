@@ -1313,6 +1313,35 @@ input[type=number]{
 
 </tr>
 
+<tr>
+
+<td>
+  Возврат наличных клиенту
+</td>
+
+<td>
+
+<input
+  type="number"
+  id="customerCashRefund"
+  value=""
+  inputmode="decimal"
+>
+
+</td>
+
+<td>
+
+<input
+  type="text"
+  id="customerCashRefundComment"
+  placeholder="Отмена чека"
+>
+
+</td>
+
+</tr>
+
 
 </tbody>
 
@@ -1851,6 +1880,18 @@ input[type=number]{
 <td id="rWithdraw"></td>
 
 <td id="rWithdrawComment"></td>
+
+</tr>
+
+<tr id="rCustomerCashRefundRow">
+
+<td>
+  Возврат наличных клиенту
+</td>
+
+<td id="rCustomerCashRefund"></td>
+
+<td id="rCustomerCashRefundComment"></td>
 
 </tr>
 
@@ -3207,11 +3248,15 @@ function calculate(){
   const withdrawal=
     num("withdraw");
 
+  const customerCashRefund=
+    num("customerCashRefund");
+
 
   const expenseTotal=
     barista+
     supplier+
-    withdrawal;
+    withdrawal+
+    customerCashRefund;
 
 
   setText(
@@ -3306,6 +3351,9 @@ async function saveToSupabase(){
   const withdrawal=
     num("withdraw");
 
+  const customerCashRefund=
+    num("customerCashRefund");
+
 
   const comments=[];
 
@@ -3326,7 +3374,8 @@ async function saveToSupabase(){
     ["Поставщик","supplierComment2","supplier2"],
     ["Поставщик","supplierComment3","supplier3"],
     ["Поставщик","supplierComment4","supplier4"],
-    ["Изъятие","withdrawComment","withdraw"]
+    ["Изъятие","withdrawComment","withdraw"],
+    ["Возврат наличных клиенту","customerCashRefundComment","customerCashRefund"]
   ]
   .forEach(
     item=>{
@@ -3409,7 +3458,8 @@ async function saveToSupabase(){
         supplier,
 
       p_expense_withdrawal:
-        withdrawal,
+        withdrawal+
+        customerCashRefund,
 
       p_closing_time:
         val("closeTime")||
@@ -3834,6 +3884,14 @@ function createReport(){
     "rWithdrawComment"
   );
 
+  fillReportRow(
+    "rCustomerCashRefundRow",
+    "customerCashRefund",
+    "customerCashRefundComment",
+    "rCustomerCashRefund",
+    "rCustomerCashRefundComment"
+  );
+
 
   fillReportRow(
     "rIncomingCashRow",
@@ -3874,7 +3932,8 @@ function createReport(){
     num("supplier2")+
     num("supplier3")+
     num("supplier4")+
-    num("withdraw");
+    num("withdraw")+
+    num("customerCashRefund");
 
 
   setText(
