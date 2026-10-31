@@ -1901,12 +1901,12 @@ input[type=number]{
 </div>
 
 
-<div class="report-section">
+<div class="report-section" id="rIncomingSection">
   ПРИХОД
 </div>
 
 
-<table class="report-table report-expenses">
+<table class="report-table report-expenses" id="rIncomingTable">
 
 <thead>
 <tr>
@@ -1934,7 +1934,7 @@ input[type=number]{
 </table>
 
 
-<div class="report-total">
+<div class="report-total" id="rIncomingTotalBlock">
   ИТОГО ПРИХОД:
   <span id="rIncomingTotal"></span>
   ₽
@@ -3945,6 +3945,20 @@ function createReport(){
       incomingTotal
     )
   );
+
+  // Скрываем весь блок «ПРИХОД» на изображении,
+  // если обе суммы отсутствуют или равны нулю.
+  const incomingVisible = incomingTotal > 0;
+  [
+    "rIncomingSection",
+    "rIncomingTable",
+    "rIncomingTotalBlock"
+  ].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.style.display = incomingVisible ? "" : "none";
+    }
+  });
 
 
   const expenseTotal=
