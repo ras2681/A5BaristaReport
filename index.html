@@ -1901,12 +1901,12 @@ input[type=number]{
 </div>
 
 
-<div class="report-section" id="rIncomingSection">
+<div class="report-section">
   ПРИХОД
 </div>
 
 
-<table class="report-table report-expenses" id="rIncomingTable">
+<table class="report-table report-expenses">
 
 <thead>
 <tr>
@@ -1934,7 +1934,7 @@ input[type=number]{
 </table>
 
 
-<div class="report-total" id="rIncomingTotalBlock">
+<div class="report-total">
   ИТОГО ПРИХОД:
   <span id="rIncomingTotal"></span>
   ₽
@@ -1957,6 +1957,17 @@ input[type=number]{
 </td>
 
 <td id="rCloseTime"></td>
+
+</tr>
+
+
+<tr>
+
+<td>
+  Предполагаемый остаток
+</td>
+
+<td id="rExpectedCash"></td>
 
 </tr>
 
@@ -3946,20 +3957,6 @@ function createReport(){
     )
   );
 
-  // Скрываем весь блок «ПРИХОД» на изображении,
-  // если обе суммы отсутствуют или равны нулю.
-  const incomingVisible = incomingTotal > 0;
-  [
-    "rIncomingSection",
-    "rIncomingTable",
-    "rIncomingTotalBlock"
-  ].forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.style.display = incomingVisible ? "" : "none";
-    }
-  });
-
 
   const expenseTotal=
     num("baristaExpense1")+
@@ -3986,6 +3983,13 @@ function createReport(){
   setText(
     "rCloseTime",
     val("closeTime")
+  );
+
+
+  setText(
+    "rExpectedCash",
+    document.getElementById("expectedCash").textContent +
+    " ₽"
   );
 
 
