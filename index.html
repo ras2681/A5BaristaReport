@@ -4070,6 +4070,11 @@ function showReportShareOptions(blob){
     '<button type="button" class="main-button" id="a5DownloadJPEG" style="margin:6px 0">СОХРАНИТЬ В ГАЛЕРЕЮ</button>'+ 
     '<button type="button" class="main-button dark-button" id="a5ShareJPEG" style="margin:6px 0">ПОДЕЛИТЬСЯ JPEG</button>'+ 
     '<div style="font-size:13px;color:#aaa;margin-top:8px">Если меню отправки не поддерживается устройством, скачайте JPEG и отправьте его из галереи или приложения «Файлы».</div>';
+  // После сохранения прокручиваем экран к блоку действий: кнопка сохранения
+  // и обе кнопки JPEG будут видны вместе, без дополнительной прокрутки.
+  requestAnimationFrame(()=>{
+    message.scrollIntoView({behavior:"smooth",block:"end"});
+  });
   document.getElementById("a5DownloadJPEG").onclick=async()=>{
     const button=document.getElementById("a5DownloadJPEG");
     button.disabled=true;
