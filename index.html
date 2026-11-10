@@ -478,6 +478,10 @@ input[type=number]{
   background:#176b78
 }
 
+.history-barista-hadizhat{
+  background:#80621f
+}
+
 .history-photo-link{
   display:block;
   margin-top:12px;
@@ -4315,10 +4319,30 @@ function getBaristaColorClass(
 
 
   if(
+    value==="admin"||
+    value==="админ"||
+    value==="администратор"
+  ){
+
+    return"history-barista-gray";
+
+  }
+
+
+  if(
     value==="диана"
   ){
 
     return"history-barista-diana";
+
+  }
+
+
+  if(
+    value==="хадижат"
+  ){
+
+    return"history-barista-hadizhat";
 
   }
 
@@ -4345,8 +4369,7 @@ function getBaristaColorClass(
     "history-barista-green",
     "history-barista-purple",
     "history-barista-orange",
-    "history-barista-red",
-    "history-barista-gray"
+    "history-barista-red"
 
   ];
 
