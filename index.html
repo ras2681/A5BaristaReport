@@ -1905,43 +1905,38 @@ input[type=number]{
 </div>
 
 
-<div class="report-section">
-  ПРИХОД
-</div>
+<div id="rIncomingSection">
+  <div class="report-section">
+    ПРИХОД
+  </div>
 
+  <table class="report-table report-expenses">
+    <thead>
+      <tr>
+        <th>Приход</th>
+        <th>Сумма</th>
+        <th>Комментарий</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="rIncomingCashRow">
+        <td>Внесение наличных</td>
+        <td id="rIncomingCash"></td>
+        <td id="rIncomingCashComment"></td>
+      </tr>
+      <tr id="rIncomingReturnRow">
+        <td>Возврат</td>
+        <td id="rIncomingReturn"></td>
+        <td id="rIncomingReturnComment"></td>
+      </tr>
+    </tbody>
+  </table>
 
-<table class="report-table report-expenses">
-
-<thead>
-<tr>
-<th>Приход</th>
-<th>Сумма</th>
-<th>Комментарий</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr id="rIncomingCashRow">
-<td>Внесение наличных</td>
-<td id="rIncomingCash"></td>
-<td id="rIncomingCashComment"></td>
-</tr>
-
-<tr id="rIncomingReturnRow">
-<td>Возврат</td>
-<td id="rIncomingReturn"></td>
-<td id="rIncomingReturnComment"></td>
-</tr>
-
-</tbody>
-</table>
-
-
-<div class="report-total">
-  ИТОГО ПРИХОД:
-  <span id="rIncomingTotal"></span>
-  ₽
+  <div class="report-total">
+    ИТОГО ПРИХОД:
+    <span id="rIncomingTotal"></span>
+    ₽
+  </div>
 </div>
 
 
@@ -3960,6 +3955,12 @@ function createReport(){
       incomingTotal
     )
   );
+
+  // В JPEG скрываем весь раздел «Приход», если обе суммы равны нулю.
+  const incomingSection=document.getElementById("rIncomingSection");
+  if(incomingSection){
+    incomingSection.style.display=incomingTotal>0?"":"none";
+  }
 
 
   const expenseTotal=
